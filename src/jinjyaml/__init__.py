@@ -1,10 +1,12 @@
 """
-A custome YAML tag for Jinja2 template
+`jinjyaml` provides Jinja2 template custom tag in YAML
+
+it does not render a whole YAML document,
+it only render Jinja2 template tag object inside a YAML document.
 """
 
-from .version import version as __version__
 from .constructor import JinjaConstructor
-from .representer import JinjayamlRepresenters
-from .tagobject import JinjyamlObject
 from .helpers import render_object
-
+from .representer import JinjayamlRepresenter
+from .tagobject import JinjyamlObject
+from .version import version as __version__

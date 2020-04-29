@@ -1,4 +1,9 @@
-class JinjayamlRepresenters:
+class JinjayamlRepresenter:
+    """Representer for Jinja2 template tags
+
+    When dumping YAML into string, the class Represents template object into YAML tag text
+    """
+
     def __init__(self, tag):
         self._tag = tag
 

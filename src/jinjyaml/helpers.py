@@ -1,5 +1,3 @@
-import yaml
-
 from .tagobject import JinjyamlObject
 
 
