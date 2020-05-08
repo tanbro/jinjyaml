@@ -10,7 +10,8 @@ on:
     branches: [develop, master]
   release:
     types: [created]
-    tags: ['v*']
+    branches: [master]
+    tags: [v*]
 
 jobs:
   lint-test:
