@@ -7,8 +7,14 @@ setup(
     name='jinjyaml',
     author='liu xue yan',
     author_email='liu_xue_yan@foxmail.com',
-    description='A custome YAML tag for Jinja2 template ',
+    description='A custom YAML tag for Jinja2 template ',
     url='https://github.com/tanbro/jinjyaml',
+
+    long_description=('\n' * 2).join(
+        open(file, encoding='utf-8').read()
+        for file in ('README.md', 'CHANGELOG.md', 'AUTHORS.md')
+    ),
+    long_description_content_type='text/markdown',
 
     packages=find_packages('src'),
     package_dir={'': 'src'},
@@ -16,10 +22,10 @@ setup(
     python_requires='>=3.5',
     setup_requires=['setuptools_scm', 'setuptools_scm_git_archive'],
     install_requires=[
-        'jinja2',
-        'PyYAML>=5.3,<6.0',
+        line.strip()
+        for line in open('requirements.txt', encoding='utf-8')
+        if line.strip() and not line.strip().startswith('#')
     ],
-    extras_require={},
 
     use_scm_version={
         # guess-next-dev:	automatically guesses the next development version (default)

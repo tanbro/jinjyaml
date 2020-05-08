@@ -1,28 +1,32 @@
-.. jinjyaml documentation master file, created by
-   sphinx-quickstart on Wed Apr 29 10:52:16 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to jinjyaml's documentation!
-====================================
+jinjyaml
+========
 
 :Release: |release|
 :Version: |version|
 :Date:    |today|
 
-API Reference
--------------
+Application specific YAML tag of Jinja2 template.
+
+Contents
+--------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Docs
+
+   README <README>
+   AUTHORS <AUTHORS>
+   CHANGELOG <CHANGELOG>
+
+.. toctree::
+   :caption: APIs
 
    apidoc/modules
 
 
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

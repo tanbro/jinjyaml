@@ -1,7 +1,9 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional, Dict
 
 import jinja2
 import yaml
+
+__all__ = ['JinjyamlObject']
 
 
 class JinjyamlObject:
@@ -27,13 +29,6 @@ class JinjyamlObject:
 
         :rtype: jinja2.Template
         """
-        return self.get_template()
-
-    def get_template(self) -> jinja2.Template:
-        """
-        :return: Template object made from :attr:`source`
-        :rtype: jinja2.Template
-        """
         if self._template is None:
             if self._env:
                 self._template = self._env.from_string(self._source)
@@ -42,6 +37,18 @@ class JinjyamlObject:
         return self._template
 
     def render(self, loader_class=None, context: Dict[str, Any] = None):
+        """render template source code into text then load it using YAML loader
+
+
+        :param loader_class: ``PyYAML``'s Loader class.
+
+            .. note:: Only ``yaml.Loader`` and ``yaml.FullLoader`` would load custom tags
+
+        :param context: variables name-value pairs for :mod:`jinja2` template rendering
+        :type context: Dict[str, Any]
+
+        :return: YAML loaded object
+        """
         if context is None:
             context = dict()
         txt = self.template.render(**context)
