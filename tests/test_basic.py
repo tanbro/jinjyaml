@@ -32,12 +32,12 @@ class BasicTestCase(unittest.TestCase):
 
     def test_construct(self):
         data = yaml.load(YAML, yaml.Loader)
-        data = jinjyaml_render(data)
+        data = jinjyaml_render(data, yaml.Loader)
         self.assertListEqual(data, DATA)
 
     def test_represent_construct(self):
         data1 = yaml.load(YAML, yaml.Loader)
-        data1 = jinjyaml_render(data1)
+        data1 = jinjyaml_render(data1, yaml.Loader)
         txt = yaml.dump(data1)
         data2 = yaml.load(txt, yaml.Loader)
         data2 = jinjyaml_render(data2, yaml.Loader)
@@ -67,7 +67,7 @@ class SerializationTestCase(unittest.TestCase):
         obj1 = yaml.load(YAML, yaml.Loader)
         data = pickle.dumps(obj1)
         obj2 = pickle.loads(data)
-        obj2 = jinjyaml_render(obj2)
+        obj2 = jinjyaml_render(obj2, yaml.Loader)
         self.assertListEqual(obj2, DATA)
 
 

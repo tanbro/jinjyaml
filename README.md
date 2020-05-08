@@ -1,5 +1,9 @@
 # jinjyaml
 
+[![CircleCI](https://circleci.com/gh/tanbro/jinjyaml.svg?style=svg)](https://circleci.com/gh/tanbro/jinjyaml)
+[![Documentation Status](https://readthedocs.org/projects/jinjyaml/badge/?version=latest)](https://jinjyaml.readthedocs.io/en/latest/?badge=latest)
+[![PyPI](https://img.shields.io/pypi/v/jinjyaml.svg)](https://pypi.org/project/jinjyaml/)
+
 Application specific YAML tag of Jinja2 template
 
 ## Usage
