@@ -4,6 +4,7 @@
 [![Documentation Status](https://readthedocs.org/projects/jinjyaml/badge/?version=latest)](https://jinjyaml.readthedocs.io/en/latest/?badge=latest)
 [![CircleCI](https://circleci.com/gh/tanbro/jinjyaml.svg?style=svg)](https://circleci.com/gh/tanbro/jinjyaml)
 [![codecov](https://codecov.io/gh/tanbro/jinjyaml/branch/master/graph/badge.svg)](https://codecov.io/gh/tanbro/jinjyaml)
+[![Python package](https://github.com/tanbro/jinjyaml/workflows/Python%20package/badge.svg)](https://github.com/tanbro/jinjyaml)
 
 Application specific YAML tag of Jinja2 template
 

@@ -12,6 +12,9 @@
     "python.testing.unittestEnabled": true,
     "cSpell.words": [
         "jinjyaml",
+        "noqa",
         "rtype"
-    ]
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }
