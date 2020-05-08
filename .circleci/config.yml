@@ -53,7 +53,10 @@ workflows:
   version: 2
   test-and-deploy: # name of your workflow
     jobs:
-      - test
+      - test:
+          filters:  # required since `deploy` has tag filters AND requires `test`
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test
