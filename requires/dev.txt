@@ -1,0 +1,6 @@
+autopep8
+Sphinx
+recommonmark
+pytest
+wheel
+twine
