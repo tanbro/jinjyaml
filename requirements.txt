@@ -1,2 +1,2 @@
-Jinja2
-PyYAML>=5.3,<6.0
+Jinja2>=2.0,<3.0
+PyYAML>=5.0,<6.0
