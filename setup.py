@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from os import linesep
+
 from setuptools import find_packages, setup
 
 setup(
     name='jinjyaml',
     author='liu xue yan',
     author_email='liu_xue_yan@foxmail.com',
-    description='A custom YAML tag for Jinja2 template ',
+    description='Application specific YAML tag of Jinja2 template',
     url='https://github.com/tanbro/jinjyaml',
 
-    long_description=('\n' * 2).join(
+    long_description=(linesep*2).join(
         open(file, encoding='utf-8').read()
         for file in ('README.md', 'CHANGELOG.md', 'AUTHORS.md')
     ),
