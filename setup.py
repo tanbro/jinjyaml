@@ -12,7 +12,9 @@ setup(
     author='liu xue yan',
     author_email='liu_xue_yan@foxmail.com',
 
-    long_description=('{0}---{0}'.format(linesep * 2)).join(
+    license='BSD License',
+
+    long_description=('{0}{1}{0}'.format(linesep * 2, '-' * 3)).join(
         open(file, encoding='utf-8').read().strip()
         for file in ('README.md', 'CHANGELOG.md', 'AUTHORS.md')
     ),
@@ -34,4 +36,13 @@ setup(
         'version_scheme': 'guess-next-dev',
         'write_to': 'src/jinjyaml/version.py',
     },
+
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Text Processing :: Markup',
+    ],
 )

@@ -2,9 +2,9 @@
 
 [![PyPI](https://img.shields.io/pypi/v/jinjyaml.svg)](https://pypi.org/project/jinjyaml/)
 [![Documentation Status](https://readthedocs.org/projects/jinjyaml/badge/?version=latest)](https://jinjyaml.readthedocs.io/en/latest/?badge=latest)
-[![CircleCI](https://circleci.com/gh/tanbro/jinjyaml.svg?style=svg)](https://circleci.com/gh/tanbro/jinjyaml)
+[![Python package lint-test deploy](https://github.com/tanbro/jinjyaml/workflows/Python%20package%20lint-test%20deploy/badge.svg)](https://github.com/tanbro/jinjyaml/actions?query=workflow%3A%22Python+package+lint-test+deploy%22)
 [![codecov](https://codecov.io/gh/tanbro/jinjyaml/branch/master/graph/badge.svg)](https://codecov.io/gh/tanbro/jinjyaml)
-[![Python package](https://github.com/tanbro/jinjyaml/workflows/Python%20package/badge.svg)](https://github.com/tanbro/jinjyaml)
+[![CircleCI](https://circleci.com/gh/tanbro/jinjyaml.svg?style=svg)](https://circleci.com/gh/tanbro/jinjyaml)
 
 Application specific YAML tag of Jinja2 template
 
