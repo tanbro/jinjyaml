@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import jinja2
 import yaml
@@ -9,7 +9,7 @@ __all__ = ['JinjyamlConstructor']
 
 
 class JinjyamlConstructor:
-    """Constructor for template tags
+    """Constructor for Jinja2 template tags
 
     When loading an object from YAML string, the class constructs template tag text into :class:`.JinjyamlObject` object
 
@@ -20,15 +20,18 @@ class JinjyamlConstructor:
 
     .. attention::
 
-        - custom tags in YAML should start with ``"!"``
-        - when invoking ``yaml.add_constructor``, the ``tag`` parameter should start with ``"!"``
-        - content of the tag **MUST be a text scalar node** in YAML
+        - Custom tags in YAML starts by ``"!"``.
+
+          When invoking ``yaml.add_constructor``,
+          the ``tag`` parameter should have a ``"!"`` at the first position.
+
+        - Content of the tag **MUST be text**
     """
 
     def __init__(self,
-                 env: jinja2.Environment = None,
-                 auto_render: bool = False,
-                 context: Dict[str, Any] = None
+                 env: Optional[jinja2.Environment] = None,
+                 auto_render: Optional[bool] = False,
+                 context: Optional[Dict[str, Any]] = None
                  ):
         """
         :param jinja2.Environment env:

@@ -2,28 +2,27 @@ __all__ = ['JinjyamlRepresenter']
 
 
 class JinjyamlRepresenter:
-    """Representer for Jinja2 template tags
+    """Representer for Jinja2 template tags.
 
-    When dumping an object into YAML string, the class represents :class:`.JinjyamlObject` object into template tag text
+    When dumping an object into YAML string,
+    convert :class:`.JinjyamlObject` to string.
 
-    Add the representer into YAML's dumper class as::
+    Add the representer into ``PyYAML``'s ``Dumper`` as below::
 
         representer = JinjyamlRepresenter('jinja2')  # No "!" here !!!
         yaml.add_representer(JinjyamlObject, representer)
 
     .. attention::
 
-        - Custom tags in YAML should start with ``"!"``
-        - But ``tag`` parameter should **NOT** start with ``"!"`` when creating :class:`JinjyamlRepresenter`
+        Custom YAML tags starts by ``"!"``.
+
+        But,  we **SHOULD NOT** put a ``"!"`` at the begin of ``tag``
+        -- the function ``yaml.add_representer`` will add the symbol itself.
     """
 
     def __init__(self, tag: str):
         """
-
         :param str tag: YAML tag
-
-        .. important::
-            Custom YAML tags should start with ``"!"``, but do **NOT** put a ``"!"`` at the start of the parameter
         """
         self._tag = tag
 
