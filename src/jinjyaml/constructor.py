@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import jinja2
 import yaml
@@ -9,43 +9,48 @@ __all__ = ['JinjyamlConstructor']
 
 
 class JinjyamlConstructor:
-    """Constructor for template tags
+    """Constructor for Jinja2 template tags
 
     When loading an object from YAML string, the class constructs template tag text into :class:`.JinjyamlObject` object
 
-    Add the constructor into YAML's loader class as::
+    Add the constructor into `PyYAML Loader` class as::
 
         constructor = JinjyamlConstructor()
         yaml.add_constructor('!jinja2', constructor)  # "!" here!!!
 
     .. attention::
 
-        - custom tags in YAML should start with ``"!"``
-        - when invoking ``yaml.add_constructor``, the ``tag`` parameter should start with ``"!"``
-        - content of the tag **MUST be a text scalar node** in YAML
+        - Custom tags in YAML starts by ``"!"``.
+
+          When invoking ``yaml.add_constructor``,
+          the ``tag`` parameter should have a ``"!"`` at the first position.
+
+        - Content of the tag **MUST be text**
     """
 
     def __init__(self,
-                 env: jinja2.Environment = None,
-                 auto_render: bool = False,
-                 context: Dict[str, Any] = None
+                 env: Optional[jinja2.Environment] = None,
+                 auto_extract: Optional[bool] = False,
+                 context: Optional[Dict[str, Any]] = None
                  ):
         """
         :param jinja2.Environment env:
-            When loading YAML string, :class:`.JinjyamlObject` objects will be constructed for each template tag.
+            A :class:`.JinjyamlObject` object is created for each template tag When parsing YAML.
 
             And it's :attr:`.JinjyamlObject.template` data member is created by:
 
             - :class:`jinja2.Template`'s constructor function directly, if ``env`` parameter is ``None``
-            - :meth:`jinja2.Environment.from_string`, if ``env`` parameter is not ``None``
+            - :meth:`jinja2.Environment.from_string`, if ``env`` parameter is instance of :class:`jinja2.Environment`
 
-        :param bool auto_render: whether to render template into an object on loading
+        :param bool auto_extract:
+            Whether to render template and parse it when loading.
 
-        :param context: variables name-value pairs for :mod:`jinja2` template rendering
         :type context: Dict[str, Any]
+        :param context:
+            Variables name-value pairs for :mod:`jinja2` template rendering.
         """
         self._env = env
-        self._auto_render = auto_render
+        self._auto_extract = auto_extract
         self._context = context or {}
 
     def __call__(self, loader, node):
@@ -63,7 +68,7 @@ class JinjyamlConstructor:
                     self.__class__.__name__, type(node))
             )
         tag_obj = JinjyamlObject(source, self._env)
-        if self._auto_render:
-            return tag_obj.render(type(loader), self._context)
+        if self._auto_extract:
+            return tag_obj.extract(type(loader), self._context)
         else:
             return tag_obj
