@@ -13,7 +13,7 @@ class JinjyamlConstructor:
 
     When loading an object from YAML string, the class constructs template tag text into :class:`.JinjyamlObject` object
 
-    Add the constructor into YAML's loader class as::
+    Add the constructor into `PyYAML Loader` class as::
 
         constructor = JinjyamlConstructor()
         yaml.add_constructor('!jinja2', constructor)  # "!" here!!!
@@ -30,25 +30,27 @@ class JinjyamlConstructor:
 
     def __init__(self,
                  env: Optional[jinja2.Environment] = None,
-                 auto_render: Optional[bool] = False,
+                 auto_extract: Optional[bool] = False,
                  context: Optional[Dict[str, Any]] = None
                  ):
         """
         :param jinja2.Environment env:
-            When loading YAML string, :class:`.JinjyamlObject` objects will be constructed for each template tag.
+            A :class:`.JinjyamlObject` object is created for each template tag When parsing YAML.
 
             And it's :attr:`.JinjyamlObject.template` data member is created by:
 
             - :class:`jinja2.Template`'s constructor function directly, if ``env`` parameter is ``None``
-            - :meth:`jinja2.Environment.from_string`, if ``env`` parameter is not ``None``
+            - :meth:`jinja2.Environment.from_string`, if ``env`` parameter is instance of :class:`jinja2.Environment`
 
-        :param bool auto_render: whether to render template into an object on loading
+        :param bool auto_extract:
+            Whether to render template and parse it when loading.
 
-        :param context: variables name-value pairs for :mod:`jinja2` template rendering
         :type context: Dict[str, Any]
+        :param context:
+            Variables name-value pairs for :mod:`jinja2` template rendering.
         """
         self._env = env
-        self._auto_render = auto_render
+        self._auto_extract = auto_extract
         self._context = context or {}
 
     def __call__(self, loader, node):
@@ -66,7 +68,7 @@ class JinjyamlConstructor:
                     self.__class__.__name__, type(node))
             )
         tag_obj = JinjyamlObject(source, self._env)
-        if self._auto_render:
-            return tag_obj.render(type(loader), self._context)
+        if self._auto_extract:
+            return tag_obj.extract(type(loader), self._context)
         else:
             return tag_obj

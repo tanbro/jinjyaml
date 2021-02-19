@@ -1,7 +1,9 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Type, Union
 
 import jinja2
 import yaml
+
+from .types import TJson
 
 __all__ = ['JinjyamlObject']
 
@@ -36,13 +38,18 @@ class JinjyamlObject:
                 self._template = jinja2.Template(self._source)
         return self._template
 
-    def render(self, loader_class=None, context: Optional[Dict[str, Any]] = None):
-        """Do rendering, then parse it using a ``PyYAML`` ``Loader``.
+    def extract(self,
+                loader_class: Optional[Type] = None,
+                context: Optional[Dict[str, Any]] = None
+                ) -> TJson:
+        """Do rendering, then parse it using a `PyYAML Loader`.
 
-        :param loader_class: ``PyYAML``'s ``Loader`` class to parse the rendered string.
+        :param loader_class:
+            `PyYAML Loader` class to parse the rendered string.
 
-        :param context: variables name-value pairs for template rendering
         :type context: Dict[str, Any]
+        :param context:
+            Variables name-value pairs for template rendering.
 
         :return: Parsed object
         """
@@ -51,3 +58,6 @@ class JinjyamlObject:
         txt = self.template.render(**context)
         obj = yaml.load(txt, loader_class)
         return obj
+
+
+TLoadedObject = Union[TJson, JinjyamlObject]

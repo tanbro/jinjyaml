@@ -19,7 +19,7 @@ Contents
    CHANGELOG <CHANGELOG>
 
 .. toctree::
-   :caption: APIs
+   :caption: API
 
    apidoc/modules
 

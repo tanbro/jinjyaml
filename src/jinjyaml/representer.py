@@ -2,12 +2,12 @@ __all__ = ['JinjyamlRepresenter']
 
 
 class JinjyamlRepresenter:
-    """Representer for Jinja2 template tags.
+    """Representer for `Jinja2` template tags.
 
     When dumping an object into YAML string,
     convert :class:`.JinjyamlObject` to string.
 
-    Add the representer into ``PyYAML``'s ``Dumper`` as below::
+    Add the representer to `PyYAML Dumper` as below::
 
         representer = JinjyamlRepresenter('jinja2')  # No "!" here !!!
         yaml.add_representer(JinjyamlObject, representer)

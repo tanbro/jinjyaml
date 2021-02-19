@@ -1,11 +1,6 @@
 jinjyaml package
 ================
 
-.. automodule:: jinjyaml
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Submodules
 ----------
 
@@ -16,4 +11,13 @@ Submodules
    jinjyaml.helpers
    jinjyaml.representer
    jinjyaml.tagobject
+   jinjyaml.types
    jinjyaml.version
+
+Module contents
+---------------
+
+.. automodule:: jinjyaml
+   :members:
+   :undoc-members:
+   :show-inheritance:
