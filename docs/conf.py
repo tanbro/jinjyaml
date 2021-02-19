@@ -11,9 +11,9 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 # import os
-import sys
-
+# import sys
 # sys.path.insert(0, os.path.abspath('.'))
+
 from pkg_resources import get_distribution
 
 # -- Project information -----------------------------------------------------
@@ -74,6 +74,6 @@ html_static_path = ['_static']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/{0[0]}'.format(sys.version_info), None),
+    'python': ('https://docs.python.org/', None),
     'jinja2': ('https://jinja.palletsprojects.com/', None),
 }

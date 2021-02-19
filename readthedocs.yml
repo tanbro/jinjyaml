@@ -1,0 +1,12 @@
+# ref: https://docs.readthedocs.io/en/stable/config-file/v2.html
+
+version: 2
+
+build:
+  image: stable
+
+python:
+  install:
+    - requirements: docs/requirements.txt
+    - method: pip
+      path: .
