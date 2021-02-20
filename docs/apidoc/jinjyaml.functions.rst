@@ -1,7 +1,7 @@
-jinjyaml.tagobject module
+jinjyaml.functions module
 =========================
 
-.. automodule:: jinjyaml.tagobject
+.. automodule:: jinjyaml.functions
    :members:
    :undoc-members:
    :show-inheritance:

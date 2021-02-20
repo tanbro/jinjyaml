@@ -1,23 +1,23 @@
-__all__ = ['JinjyamlRepresenter']
+__all__ = ['Representer']
 
 
-class JinjyamlRepresenter:
+class Representer:
     """Representer for `Jinja2` template tags.
 
     When dumping an object into YAML string,
-    convert :class:`.JinjyamlObject` to string.
+    convert :class:`.Data` to string.
 
     Add the representer to `PyYAML Dumper` as below::
 
-        representer = JinjyamlRepresenter('jinja2')  # No "!" here !!!
-        yaml.add_representer(JinjyamlObject, representer)
+        representer = jinjyaml.Representer('j2')  # No "!" here !!!
+        yaml.add_representer(Node, representer)
 
     .. attention::
 
         Custom YAML tags starts by ``"!"``.
 
-        But,  we **SHOULD NOT** put a ``"!"`` at the begin of ``tag``
-        -- the function ``yaml.add_representer`` will add the symbol itself.
+        But here we **SHOULD NOT** put a ``"!"`` at the begin of ``tag``
+        -- ``yaml.add_representer`` will add the symbol itself.
     """
 
     def __init__(self, tag: str):
