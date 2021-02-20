@@ -8,10 +8,9 @@ Submodules
    :maxdepth: 4
 
    jinjyaml.constructor
-   jinjyaml.helpers
+   jinjyaml.data
+   jinjyaml.functions
    jinjyaml.representer
-   jinjyaml.tagobject
-   jinjyaml.types
    jinjyaml.version
 
 Module contents

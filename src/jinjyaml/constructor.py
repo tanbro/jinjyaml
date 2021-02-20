@@ -3,29 +3,29 @@ from typing import Any, Dict, Optional
 import jinja2
 import yaml
 
-from .tagobject import JinjyamlObject
+from .data import Data
 
-__all__ = ['JinjyamlConstructor']
+__all__ = ['Constructor']
 
 
-class JinjyamlConstructor:
-    """Constructor for Jinja2 template tags
+class Constructor:
+    """Constructor for `Jinja2` template tags
 
-    When loading an object from YAML string, the class constructs template tag text into :class:`.JinjyamlObject` object
+    When parsing YAML string, the class constructs template tag text into :class:`.Data` object
 
     Add the constructor into `PyYAML Loader` class as::
 
-        constructor = JinjyamlConstructor()
-        yaml.add_constructor('!jinja2', constructor)  # "!" here!!!
+        constructor = jinjyaml.Constructor()
+        yaml.add_constructor('!j2', constructor)  # "!" here!!!
 
     .. attention::
 
         - Custom tags in YAML starts by ``"!"``.
 
-          When invoking ``yaml.add_constructor``,
-          the ``tag`` parameter should have a ``"!"`` at the first position.
+          When call ``yaml.add_constructor``,
+          the ``tag`` parameter **MUST** have a single ``"!"`` at the first position.
 
-        - Content of the tag **MUST be text**
+        - Content of the tag **MUST** be text
     """
 
     def __init__(self,
@@ -35,9 +35,9 @@ class JinjyamlConstructor:
                  ):
         """
         :param jinja2.Environment env:
-            A :class:`.JinjyamlObject` object is created for each template tag When parsing YAML.
+            A :class:`.Data` object is created for each template tag When parsing YAML.
 
-            And it's :attr:`.JinjyamlObject.template` data member is created by:
+            And it's :attr:`.Data.template` data member is created by:
 
             - :class:`jinja2.Template`'s constructor function directly, if ``env`` parameter is ``None``
             - :meth:`jinja2.Environment.from_string`, if ``env`` parameter is instance of :class:`jinja2.Environment`
@@ -67,8 +67,8 @@ class JinjyamlConstructor:
                 '`{}` does not support `{}` YAML node'.format(
                     self.__class__.__name__, type(node))
             )
-        tag_obj = JinjyamlObject(source, self._env)
+        data = Data(source, self._env)
         if self._auto_extract:
-            return tag_obj.extract(type(loader), self._context)
+            return data.extract(type(loader), self._context)
         else:
-            return tag_obj
+            return data

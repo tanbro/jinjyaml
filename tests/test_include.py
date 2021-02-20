@@ -4,8 +4,8 @@ from os import path
 from textwrap import dedent
 
 import jinja2
+import jinjyaml
 import yaml
-from jinjyaml import JinjyamlConstructor, jinjyaml_extract
 
 TAG = 'j2'
 SEARCH_PATH = 'tests'
@@ -17,7 +17,7 @@ class IncludeTestCase(unittest.TestCase):
         j2_env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(SEARCH_PATH)
         )
-        constructor = JinjyamlConstructor(
+        constructor = jinjyaml.Constructor(
             env=j2_env
         )
         yaml.add_constructor('!{}'.format(TAG), constructor)
@@ -32,7 +32,7 @@ class IncludeTestCase(unittest.TestCase):
             yaml.Loader
         )
 
-        data = jinjyaml_extract(doc, yaml.Loader)
+        data = jinjyaml.extract(doc, yaml.Loader)
 
         foo = dict()
         with ExitStack() as stack:
