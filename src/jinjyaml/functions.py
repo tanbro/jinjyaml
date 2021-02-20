@@ -24,7 +24,7 @@ def extract(
 
     :type obj: dict, list, Data
     :param obj:
-        What's parsed by `PyYAML Loader`.
+        What parsed by `PyYAML Loader`.
 
         It may be:
 

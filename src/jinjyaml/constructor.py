@@ -13,7 +13,7 @@ class Constructor:
 
     When parsing YAML string, the class constructs template tag text into :class:`.Data` object
 
-    Add the constructor into `PyYAML Loader` class as::
+    Add the constructor to `PyYAML Loader` as below::
 
         constructor = jinjyaml.Constructor()
         yaml.add_constructor('!j2', constructor)  # "!" here!!!
