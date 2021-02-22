@@ -1,60 +1,31 @@
-from typing import Any, Dict, List, Optional, Type, Union
-
-import jinja2
-import yaml
+from typing import Optional, Type
 
 __all__ = ['Data']
 
 
 class Data:
-    """A `PyYAML` Custom tag represents `Jinja2` templates
+    """A `PyYAML` Custom tag represents a `Jinja2` template object.
     """
 
-    def __init__(self, source: str, env: Optional[jinja2.Environment] = None):
-        self._env = env
+    def __init__(self,
+                 source: str,
+                 loader_type: Optional[Type] = None,
+                 ):
         self._source = source
-        self._template = None
+        self._loader_type = loader_type
 
     @property
     def source(self) -> str:
-        """Source code to make :attr:`template`
+        """Source code to make `Jinja2` template.
 
         :rtype: str
         """
         return self._source
 
     @property
-    def template(self) -> jinja2.Template:
-        """Template object made from :attr:`source`
+    def loader_type(self) -> Type:
+        """`PyYAML Loader` class parsing the tag object.
 
-        :rtype: jinja2.Template
+        :rtype: Type
         """
-        if self._template is None:
-            if self._env:
-                self._template = self._env.from_string(self._source)
-            else:
-                self._template = jinja2.Template(self._source)
-        return self._template
-
-    def extract(self,
-                loader_class: Optional[Type] = None,
-                context: Optional[Dict[str, Any]] = None
-                ):
-        """
-        Render the :attr:`template` by `Jinja2` template engine,
-        then parse the rendered text with a `PyYAML Loader`.
-
-        :param loader_class:
-            `PyYAML Loader` class to parse the rendered string.
-
-        :type context: Dict[str, Any]
-        :param context:
-            Variables name-value pairs for template rendering.
-
-        :return: Parsed object
-        """
-        if context is None:
-            context = dict()
-        txt = self.template.render(**context)
-        obj = yaml.load(txt, loader_class)
-        return obj
+        return self._loader_type

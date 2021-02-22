@@ -1,5 +1,7 @@
-from typing import (Any, Mapping, MutableMapping, MutableSequence, Optional,
-                    Type)
+from typing import Any, Mapping, MutableMapping, MutableSequence, Optional
+
+import jinja2
+import yaml
 
 from .data import Data
 
@@ -7,51 +9,54 @@ __all__ = ['extract']
 
 
 def extract(
-        obj,
-        loader_class: Optional[Type] = None,
-        context: Optional[Mapping[str, Any]] = None
+    obj,
+    env: Optional[jinja2.Environment] = None,
+    context: Optional[Mapping[str, Any]] = None
 ):
-    """Render and parse recursively.
+    """Recursively render and parse template tag objects in a YAML doc-tree.
 
     It does:
 
-    1. Recursively search :class:`.Data` objects inside ``obj``.
-    2. Call :meth:`.Data.extract` of each found object
-    3. **In-place replace** each :class:`.Data` object with corresponding extracted data.
+    1. Recursively search :class:`.Data` objects.
+    2. Render :meth:`.Data.source` into a string with `Jinja2`.
+    3. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj``.
+    4. **In-place replace** each :class:`.Data` object with corresponding parsed `Python` object.
 
     .. attention::
         The ``obj`` parameter is modified in the function if any :class:`.Data` object in it.
 
     :type obj: dict, list, Data
     :param obj:
-        What's parsed by `PyYAML Loader`.
+        What parsed by `PyYAML Loader`.
 
         It may be:
 
-        * a :class:`dict` or :class:`list` object contains :class:`.Data` object(s)
-        * a :class:`.Data` object
+        * A :class:`dict` or :class:`list` object contains :class:`.Data` object(s).
+        * A single :class:`.Data` object.
 
-    :param loader_class:
-        `PyYAML Loader` class to parse the rendered string.
+    :param jinja2.Environment env:
+        Environment for `Jinja2` template rendering.
 
-        .. note::
-            The argument expects `PyYAML Loader` *class type*, **NOT** *instance*
-
-    :type context: Dict[str, Any]
+    :type context: Mapping[str, Any]
     :param context:
-        variables name-value pairs for `Jinja2` template rendering
+        Variables name-value pairs for `Jinja2` template rendering.
 
     :return:
-        Final extracted data
+        Final extracted `Python` object
     """
-    if context is None:
-        context = dict()
     if isinstance(obj, Data):
-        obj = obj.extract(loader_class, context)
-    elif isinstance(obj, MutableMapping):
-        for k, v in obj.items():
-            obj[k] = extract(v, loader_class, context)
+        if env is None:
+            template = jinja2.Template(obj.source)
+        else:
+            template = env.from_string(obj.source)
+        if context is None:
+            context = dict()
+        txt = template.render(**context)
+        obj = yaml.load(txt, obj.loader_type)
     elif isinstance(obj, MutableSequence) and not isinstance(obj, (bytearray, bytes, str)):
         for i, v in enumerate(obj):
-            obj[i] = extract(v, loader_class, context)
+            obj[i] = extract(v, env, context)
+    elif isinstance(obj, MutableMapping):
+        for k, v in obj.items():
+            obj[k] = extract(v, env, context)
     return obj

@@ -30,28 +30,17 @@ class BasicTestCase(unittest.TestCase):
         yaml.add_representer(jinjyaml.Data, representer)
 
     def test_construct(self):
-        data = yaml.load(YAML, yaml.Loader)
-        data = jinjyaml.extract(data, yaml.Loader)
+        obj = yaml.load(YAML, yaml.Loader)
+        data = jinjyaml.extract(obj)
         self.assertListEqual(data, DATA)
 
     def test_represent_construct(self):
-        data1 = yaml.load(YAML, yaml.Loader)
-        data1 = jinjyaml.extract(data1, yaml.Loader)
+        obj1 = yaml.load(YAML, yaml.Loader)
+        data1 = jinjyaml.extract(obj1)
         txt = yaml.dump(data1)
-        data2 = yaml.load(txt, yaml.Loader)
-        data2 = jinjyaml.extract(data2, yaml.Loader)
+        obj2 = yaml.load(txt, yaml.Loader)
+        data2 = jinjyaml.extract(obj2)
         self.assertListEqual(data1, data2)
-
-
-class AutoExtractTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        constructor = jinjyaml.Constructor(auto_extract=True)
-        yaml.add_constructor('!{}'.format(TAG), constructor)
-
-    def test_auto_extract(self):
-        data = yaml.load(YAML, yaml.Loader)
-        self.assertListEqual(data, DATA)
 
 
 class SerializationTestCase(unittest.TestCase):
@@ -66,7 +55,7 @@ class SerializationTestCase(unittest.TestCase):
         obj1 = yaml.load(YAML, yaml.Loader)
         data = pickle.dumps(obj1)
         obj2 = pickle.loads(data)
-        obj2 = jinjyaml.extract(obj2, yaml.Loader)
+        obj2 = jinjyaml.extract(obj2)
         self.assertListEqual(obj2, DATA)
 
 
