@@ -11,8 +11,8 @@ Application specific tag of [Jinja2][] template in [PyYAML][]
 ## Usage
 
 ```python
->>> import jinjyaml
 >>> import yaml
+>>> import jinjyaml
 >>>
 >>> txt = '''
 ... array:
@@ -25,7 +25,9 @@ Application specific tag of [Jinja2][] template in [PyYAML][]
 >>> constructor = jinjyaml.Constructor()
 >>> yaml.add_constructor('!j2', constructor)
 >>> obj = yaml.load(txt, yaml.Loader)
->>> jinjyaml.extract(obj, yaml.Loader, {'n': 3})
+>>> data = jinjyaml.extract(obj, {'n': 3})
+>>>
+>>> print(data)
 {'array': [{'sub0': 1}, {'sub1': 2}, {'sub2': 3}]}
 ```
 

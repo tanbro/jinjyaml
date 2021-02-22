@@ -12,14 +12,14 @@ SEARCH_PATH = 'tests'
 
 
 class IncludeTestCase(unittest.TestCase):
+    j2_env = None
+
     @classmethod
     def setUpClass(cls):
-        j2_env = jinja2.Environment(
+        cls.j2_env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(SEARCH_PATH)
         )
-        constructor = jinjyaml.Constructor(
-            env=j2_env
-        )
+        constructor = jinjyaml.Constructor()
         yaml.add_constructor('!{}'.format(TAG), constructor)
 
     def test_include_mapping(self):
@@ -32,7 +32,7 @@ class IncludeTestCase(unittest.TestCase):
             yaml.Loader
         )
 
-        data = jinjyaml.extract(doc, yaml.Loader)
+        data = jinjyaml.extract(doc, env=self.j2_env)
 
         foo = dict()
         with ExitStack() as stack:

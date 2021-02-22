@@ -3,5 +3,8 @@ requires = ["setuptools>=48.0", "wheel", "setuptools_scm[toml]>=3.4", "setuptool
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-version_scheme = "guess-next-dev" # or post-release
+version_scheme = "guess-next-dev" # guess-next-dev or post-release
 write_to = "src/jinjyaml/version.py"
+
+[tool.autopep8]
+max_line_length = 127
