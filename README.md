@@ -22,10 +22,9 @@ Application specific tag of [Jinja2][] template in [PyYAML][]
 ...     {% endfor %}
 ... '''
 >>>
->>> constructor = jinjyaml.Constructor()
->>> yaml.add_constructor('!j2', constructor)
+>>> yaml.add_constructor('!j2', jinjyaml.Constructor())
 >>> obj = yaml.load(txt, yaml.Loader)
->>> data = jinjyaml.extract(obj, {'n': 3})
+>>> data = jinjyaml.extract(obj, context={'n': 3})
 >>>
 >>> print(data)
 {'array': [{'sub0': 1}, {'sub1': 2}, {'sub2': 3}]}
