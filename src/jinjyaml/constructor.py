@@ -8,7 +8,7 @@ __all__ = ['Constructor']
 class Constructor:
     """Constructor class for `Jinja2` template YAML tags.
 
-    When parsing YAML string, the class constructs template tag text into :class:`.Data` object
+    When parsing YAML string, the class constructs template tags to :class:`.Data` objects.
 
     Add the constructor to `PyYAML Loader` as below::
 
@@ -26,10 +26,10 @@ class Constructor:
 
     .. attention::
 
-        - Custom tags in YAML starts by ``"!"``.
+        - Custom YAML tags start with ``"!"``.
 
-          When call ``yaml.add_constructor``,
-          the ``tag`` parameter **MUST** have a single ``"!"`` at the first position.
+          So, when we call ``yaml.add_constructor``,
+          the ``tag`` parameter **MUST** have a single ``"!"`` at the begining.
 
         - Content of the tag **MUST** be text
     """

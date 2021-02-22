@@ -14,9 +14,9 @@ class Representer:
 
     .. attention::
 
-        Custom YAML tags starts by ``"!"``.
+        Custom YAML tags start with ``"!"``.
 
-        But here we **SHOULD NOT** put a ``"!"`` at the begin of ``tag``
+        But, here we **SHOULD NOT** put a ``"!"`` at the begining of ``tag``
         -- ``yaml.add_representer`` will add the symbol itself.
     """
 

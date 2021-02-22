@@ -6,7 +6,10 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tanbro_jinjyaml&metric=alert_status)](https://sonarcloud.io/dashboard?id=tanbro_jinjyaml)
 [![PyPI](https://img.shields.io/pypi/v/jinjyaml.svg)](https://pypi.org/project/jinjyaml/)
 
-Application specific tag of [Jinja2][] template in [PyYAML][]
+Application specific tag of [Jinja2][] template in [PyYAML][].
+
+It may be useful if you only want to render special tag nodes in the document,
+instead of whole YAML string as a template.
 
 ## Usage
 

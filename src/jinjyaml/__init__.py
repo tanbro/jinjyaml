@@ -1,8 +1,8 @@
 """
-``jinjyaml`` provides custom ``Jinja2`` template tags for ``PyYAML``.
+Application specific tag of Jinja2 template in PyYAML.
 
-It does not render whole YAML document,
-it only renders Jinja2 template tag objects inside a YAML document.
+It may be useful if you only want to render special tag nodes in the document,
+instead of whole YAML string as a template.
 """
 
 from .constructor import *
