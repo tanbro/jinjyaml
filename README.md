@@ -17,7 +17,9 @@ instead of whole YAML string as a template.
 >>> import yaml
 >>> import jinjyaml
 >>>
->>> txt = '''
+>>> yaml.add_constructor('!j2', jinjyaml.Constructor())
+>>>
+>>> s = '''
 ... array:
 ...   !j2 |
 ...     {% for i in range(n) %}
@@ -25,10 +27,9 @@ instead of whole YAML string as a template.
 ...     {% endfor %}
 ... '''
 >>>
->>> yaml.add_constructor('!j2', jinjyaml.Constructor())
->>> obj = yaml.load(txt, yaml.Loader)
->>> data = jinjyaml.extract(obj, context={'n': 3})
+>>> obj = yaml.load(s)
 >>>
+>>> data = jinjyaml.extract(obj, context={'n': 3})
 >>> print(data)
 {'array': [{'sub0': 1}, {'sub1': 2}, {'sub2': 3}]}
 ```
