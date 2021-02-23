@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "python.pythonPath": "venv/bin/python3",
     "python.linting.enabled": true,
     "python.testing.unittestEnabled": true,
 }
