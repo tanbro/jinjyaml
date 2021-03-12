@@ -23,7 +23,7 @@ class Data:
         return self._source
 
     @property
-    def loader_type(self) -> Type:
+    def loader_type(self) -> Optional[Type]:
         """`PyYAML Loader` class parsing the tag object.
 
         :rtype: Type
