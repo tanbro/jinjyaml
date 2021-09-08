@@ -4,6 +4,9 @@
 
 - Date: 2021-09-08
 
+- new api
+- update to Jinja2 3.0
+
 ## 0.2a1
 
 Many APIs changed in `v0.2`
