@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2
+
+- Date: 2021-09-08
+
 ## 0.2a1
 
 Many APIs changed in `v0.2`
