@@ -66,7 +66,7 @@ def extract(
     elif isinstance(obj, MutableMapping):
         for k, v in obj.items():
             obj[k] = extract(v, env, context)
-    elif isinstance(obj, MutableSequence) and not isinstance(obj, (bytearray, bytes, str, memoryview)):
+    elif isinstance(obj, MutableSequence) and not isinstance(obj, (bytearray, bytes, str)):
         for i, v in enumerate(obj):
             obj[i] = extract(v, env, context)
     return obj
