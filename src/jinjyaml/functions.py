@@ -1,4 +1,4 @@
-from typing import Any, Mapping, MutableMapping, MutableSequence, Optional
+from typing import Any, Mapping, Sequence, Optional
 
 import jinja2
 import yaml
@@ -9,26 +9,35 @@ __all__ = ['extract']
 
 
 def extract(
-    obj,
-    env: Optional[jinja2.Environment] = None,
-    context: Optional[Mapping[str, Any]] = None
+        obj,
+        env: Optional[jinja2.Environment] = None,
+        context: Optional[Mapping[str, Any]] = None,
+        inplace: bool = False
 ):
     """Recursively render and parse template tag objects in a YAML doc-tree.
-
 
     The ``obj`` parameter may be:
 
     * A mapping or sequence object returned by a `PyYAML Loader`.
       In this case, the function does:
 
-        1. Recursively search :class:`.Data` objects inside ``obj``.
-        2. Render :meth:`.Data.source` into a string with `Jinja2`.
-        3. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj``.
-        4. **In-place replace** each :class:`.Data` object with corresponding parsed `Python` object.
-        5. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
+        #. Recursively search :class:`.Data` objects inside ``obj``.
+        #. Render :meth:`Data.source` into a string with `Jinja2` .
+        #. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj`` .
 
-        .. attention::
-            ``obj`` is modified if any :class:`.Data` object in it.
+        #. Do the render and parse:
+
+            #. If ``inplace`` argument is ``True``:
+
+               **In-place replace** each :class:`.Data` object with corresponding parsed `Python` object.
+
+               In this case, ``obj`` should be mutable or it can not be changed.
+
+            #. If ``inplace`` argument is ``False`` (default):
+
+               render and parse each :class:`.Data` object with corresponding parsed `Python` object, without change the passed-in argument;
+
+        #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
 
     * A single :class:`.Data` object.
       In this case, the function does:
@@ -36,6 +45,11 @@ def extract(
         1. Render :meth:`.Data.source` into a string with `Jinja2`.
         2. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj``.
         3. Return the rendered and parsed `Python` object.
+
+        .. note::
+           When the passed-in `obj` argument is an instance of :class:`.Data`,
+           it **won't** be changed even if set ``inplace`` to ``True``.
+           while the return value is the pared object.
 
     * Other scalar objects returned by a `PyYAML Loader`.
       In this case, the function returns ``obj`` with noting changed.
@@ -51,6 +65,10 @@ def extract(
     :param context:
         Variables name-value pairs for `Jinja2` template rendering.
 
+    :param bool inplace:
+        In-place replace :class:`.Data` inside the passed-in ``obj`` argument's with parsed object.
+        When ``True``, the ``obj`` should be mutable dict or list like object.
+
     :return:
         Final extracted `Python` object
     """
@@ -61,12 +79,18 @@ def extract(
             template = env.from_string(obj.source)
         if context is None:
             context = dict()
-        txt = template.render(**context)
-        obj = yaml.load(txt, obj.loader_type)
-    elif isinstance(obj, MutableMapping):
-        for k, v in obj.items():
-            obj[k] = extract(v, env, context)
-    elif isinstance(obj, MutableSequence) and not isinstance(obj, (bytearray, bytes, str)):
-        for i, v in enumerate(obj):
-            obj[i] = extract(v, env, context)
+        s = template.render(**context)
+        return yaml.load(s, obj.loader_type)
+    elif isinstance(obj, Mapping):
+        if inplace:
+            for k, v in obj.items():
+                obj[k] = extract(v, env, context, inplace=True)  # type: ignore
+        else:
+            return {k: extract(v, env, context, inplace=False) for k, v in obj.items()}
+    elif isinstance(obj, Sequence) and not isinstance(obj, (bytearray, bytes, memoryview, str)):
+        if inplace:
+            for i, v in enumerate(obj):
+                obj[i] = extract(v, env, context, inplace=True)  # type: ignore
+        else:
+            return [extract(m, env, context, inplace=False) for m in obj]
     return obj
