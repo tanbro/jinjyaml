@@ -39,7 +39,7 @@ instead of whole YAML string as a template.
 
 ### Example 2
 
-We has such YAML files:
+We have such YAML files:
 
 - `child-1.yml`:
 

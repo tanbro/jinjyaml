@@ -22,7 +22,7 @@ def extract(
       In this case, the function does:
 
         #. Recursively search :class:`.Data` objects inside ``obj``.
-        #. Render :meth:`Data.source` into a string with `Jinja2` .
+        #. Render :meth:`.Data.source` into a string with `Jinja2` .
         #. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj`` .
 
         #. Do the render and parse:
@@ -49,7 +49,7 @@ def extract(
         .. note::
            When the passed-in `obj` argument is an instance of :class:`.Data`,
            it **won't** be changed even if set ``inplace`` to ``True``.
-           while the return value is the pared object.
+           However, return value is the pared object.
 
     * Other scalar objects returned by a `PyYAML Loader`.
       In this case, the function returns ``obj`` with noting changed.
