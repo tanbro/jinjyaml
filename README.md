@@ -70,6 +70,7 @@ execute python code:
 ```python
 from pprint import pprint
 
+import jinja2
 import jinjyaml as jy
 import yaml
 
