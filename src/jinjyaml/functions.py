@@ -21,23 +21,23 @@ def extract(
     * A mapping or sequence object returned by a `PyYAML Loader`.
       In this case, the function does:
 
-        #. Recursively search :class:`.Data` objects inside ``obj``.
-        #. Render :meth:`.Data.source` into a string with `Jinja2` .
-        #. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj`` .
+        # Recursively search :class:`.Data` objects inside ``obj``.
+        # Render :meth:`.Data.source` into a string with `Jinja2` .
+        # Parse the rendered string with the `PyYAML Loader` who loaded the ``obj`` .
 
-        #. Do the render and parse:
+        # Render and parse:
 
-            #. If ``inplace`` argument is ``True``:
+            # When ``inplace`` is ``True``:
 
-               **In-place replace** each :class:`.Data` object with corresponding parsed `Python` object.
+               In-place replace every :class:`.Data` object with corresponding parsed `Python` object.
 
                In this case, ``obj`` should be mutable or it can not be changed.
 
-            #. If ``inplace`` argument is ``False`` (default):
+            # When ``inplace`` is ``False`` (default):
 
-               render and parse each :class:`.Data` object with corresponding parsed `Python` object, without change the passed-in argument;
+               render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object;
 
-        #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
+        # Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
 
     * A single :class:`.Data` object.
       In this case, the function does:
