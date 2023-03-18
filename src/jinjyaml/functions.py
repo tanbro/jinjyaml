@@ -1,4 +1,4 @@
-from typing import Any, Mapping, Sequence, Optional
+from typing import Any, Mapping, Optional, Sequence
 
 import jinja2
 import yaml

@@ -19,19 +19,17 @@ class Constructor:
         constructor = jinjyaml.Constructor()
 
         # Attention: tag name starts with "!"
-        yaml.add_constructor('!j2', constructor)  
+        yaml.add_constructor('!j2', constructor)
         # or
         yaml.add_constructor('!j2', constructor, yaml.CLoader)
 
-
     .. attention::
 
-        - Custom YAML tags start with ``"!"``.
+       - Custom YAML tags start with ``"!"``.
 
-          So, when we call ``yaml.add_constructor``,
-          the ``tag`` parameter **MUST** have a single ``"!"`` at the begining.
+         So, when we call ``yaml.add_constructor``, the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
 
-        - Content of the tag **MUST** be text
+       - Content of the tag **MUST** be text
     """
 
     def __call__(self, loader, node):
@@ -39,12 +37,12 @@ class Constructor:
             source = loader.construct_scalar(node)
             if not isinstance(source, str):
                 raise TypeError(
-                    '`{}` expects `str`, but actual `{}`'.format(
-                        self.__class__.__name__, type(source))
+                    '`{}` expects `str`, but actual `{}`'
+                    .format(self.__class__.__name__, type(source))
                 )
         else:
             raise TypeError(
-                '`{}` does not support `{}`'.format(
-                    self.__class__.__name__, type(node))
+                '`{}` does not support `{}`'
+                .format(self.__class__.__name__, type(node))
             )
         return Data(source, type(loader))

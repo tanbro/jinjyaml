@@ -1,4 +1,4 @@
-from typing import Optional, Type
+from typing import Type
 
 __all__ = ['Data']
 
@@ -9,7 +9,7 @@ class Data:
 
     def __init__(self,
                  source: str,
-                 loader_type: Optional[Type] = None,
+                 loader_type: Type,
                  ):
         self._source = source
         self._loader_type = loader_type
@@ -23,7 +23,7 @@ class Data:
         return self._source
 
     @property
-    def loader_type(self) -> Optional[Type]:
+    def loader_type(self) -> Type:
         """`PyYAML Loader` class parsing the tag object.
 
         :rtype: Type
