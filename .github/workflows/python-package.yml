@@ -51,12 +51,10 @@ jobs:
 
       - name: Test with unittest
         run: |
-          python3 -m unittest
+          python3 -m unittest -v
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: src
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
