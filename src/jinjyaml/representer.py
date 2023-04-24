@@ -1,4 +1,4 @@
-__all__ = ['Representer']
+__all__ = ["Representer"]
 
 
 class Representer:
@@ -16,7 +16,7 @@ class Representer:
 
         Custom YAML tags start with ``"!"``.
 
-        But, here we **SHOULD NOT** put a ``"!"`` at the begining of ``tag``
+        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag``
         -- ``yaml.add_representer`` will add the symbol itself.
     """
 
@@ -27,4 +27,4 @@ class Representer:
         self._tag = tag
 
     def __call__(self, dumper, data):
-        return dumper.represent_scalar('!{}'.format(self._tag), data.source)
+        return dumper.represent_scalar("!{}".format(self._tag), data.source)

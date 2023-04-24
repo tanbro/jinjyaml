@@ -1,16 +1,16 @@
 from typing import Type
 
-__all__ = ['Data']
+__all__ = ["Data"]
 
 
 class Data:
-    """A `PyYAML` Custom tag represents a `Jinja2` template object.
-    """
+    """A `PyYAML` Custom tag represents a `Jinja2` template object."""
 
-    def __init__(self,
-                 source: str,
-                 loader_type: Type,
-                 ):
+    def __init__(
+        self,
+        source: str,
+        loader_type: Type,
+    ):
         self._source = source
         self._loader_type = loader_type
 

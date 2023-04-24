@@ -5,14 +5,14 @@ import yaml
 
 from .data import Data
 
-__all__ = ['extract']
+__all__ = ["extract"]
 
 
 def extract(
-        obj,
-        env: Optional[jinja2.Environment] = None,
-        context: Optional[Mapping[str, Any]] = None,
-        inplace: bool = False
+    obj,
+    env: Optional[jinja2.Environment] = None,
+    context: Optional[Mapping[str, Any]] = None,
+    inplace: bool = False,
 ):
     """Recursively render and parse template tag objects in a YAML doc-tree.
 
@@ -87,7 +87,9 @@ def extract(
                 obj[k] = extract(v, env, context, inplace=True)  # type: ignore
         else:
             return {k: extract(v, env, context, inplace=False) for k, v in obj.items()}
-    elif isinstance(obj, Sequence) and not isinstance(obj, (bytearray, bytes, memoryview, str)):
+    elif isinstance(obj, Sequence) and not isinstance(
+        obj, (bytearray, bytes, memoryview, str)
+    ):
         if inplace:
             for i, v in enumerate(obj):
                 obj[i] = extract(v, env, context, inplace=True)  # type: ignore

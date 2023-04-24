@@ -1,6 +1,4 @@
 {
-    "python.pythonPath": "venv/bin/python3",
-    "python.linting.enabled": true,
     "python.testing.unittestEnabled": true,
     "markdownlint.config": {
         "MD028": false,
@@ -8,4 +6,14 @@
             "front_matter_title": ""
         }
     },
+    "cSpell.words": [
+        "jinjyaml",
+        "pprint",
+        "Representer",
+        "rtype"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
 }
