@@ -45,13 +45,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
 
-      - name: Install project
+      - name: Install project and test dependencies
         run: |
           pip install -e .
+          pip install pytest pytest-cov
 
-      - name: Test with unittest
+      - name: Test
         run: |
-          python3 -m unittest -v
+          pytest --cov=jinjyaml --cov-report=xml --cov-branch
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
