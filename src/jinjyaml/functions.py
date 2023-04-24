@@ -42,13 +42,13 @@ def extract(
     * A single :class:`.Data` object.
       In this case, the function does:
 
-        1. Render :meth:`.Data.source` into a string with `Jinja2`.
+        1. Render :meth:`.Data.source` into a string with ``Jinja2``.
         2. Parse the rendered string with the `PyYAML Loader` who loaded the ``obj``.
         3. Return the rendered and parsed `Python` object.
 
         .. note::
-           When the passed-in `obj` argument is an instance of :class:`.Data`,
-           it **won't** be changed even if set ``inplace`` to ``True``.
+           When the passed-in ``obj`` argument is an instance of :class:`.Data`,
+           it **won't** be changed, even ``inplace`` was set to ``True``.
            However, return value is the pared object.
 
     * Other scalar objects returned by a `PyYAML Loader`.

@@ -14,9 +14,9 @@ Contents
    :maxdepth: 1
    :caption: Docs
 
-   README <README>
-   AUTHORS <AUTHORS>
-   CHANGELOG <CHANGELOG>
+   README <../README.md>
+   AUTHORS <../AUTHORS.md>
+   CHANGELOG <../CHANGELOG.md>
 
 .. toctree::
    :caption: API
