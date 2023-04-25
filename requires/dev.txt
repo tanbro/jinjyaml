@@ -1,2 +1,4 @@
-coverage
-ipykernel
+pytest
+pytest-conv
+build
+twine
