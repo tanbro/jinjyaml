@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 0.3
+
+| Version | 0.3       |
+| ------- | --------- |
+| Date    | 2023-4-25 |
+
+- Change:
+  - Python >= 3.7 required now.
+- Misc:
+  - Improve CI
+
 ## 0.2.2
 
 | Version | 0.2.2      |
