@@ -1,2 +1,2 @@
-Sphinx>=6.0
+Sphinx>=6.0,<7.0
 myst-parser
