@@ -2,6 +2,7 @@ from yaml.nodes import ScalarNode
 
 from .data import Data
 
+
 __all__ = ["Constructor"]
 
 

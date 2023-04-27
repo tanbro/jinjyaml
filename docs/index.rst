@@ -24,7 +24,6 @@ Contents
    apidoc/modules
 
 
-
 Indices and tables
 ------------------
 
