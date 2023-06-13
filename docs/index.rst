@@ -3,7 +3,7 @@ jinjyaml
 
 :Release: |release|
 :Version: |version|
-:Date:    |today|
+:Built at:    |today|
 
 Application specific YAML tag of Jinja2 template.
 
@@ -11,7 +11,7 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 1
+   :titlesonly:
    :caption: Docs
 
    README <README.md>
@@ -19,6 +19,7 @@ Contents
    CHANGELOG <CHANGELOG.md>
 
 .. toctree::
+   :maxdepth: 4
    :caption: API
 
    apidoc/modules

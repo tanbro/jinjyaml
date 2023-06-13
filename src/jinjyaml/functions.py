@@ -21,23 +21,23 @@ def extract(
     * A mapping or sequence object returned by a `PyYAML Loader`.
       In this case, the function does:
 
-        # Recursively search :class:`.Data` objects inside ``obj``.
-        # Render :meth:`.Data.source` into a string with `Jinja2` .
-        # Parse the rendered string with the `PyYAML Loader` who loaded the ``obj`` .
+        * Recursively search :class:`.Data` objects inside ``obj``.
+        * Render :meth:`.Data.source` into a string with `Jinja2` .
+        * Parse the rendered string with the `PyYAML Loader` who loaded the ``obj``.
 
-        # Render and parse:
+        * Render and parse:
 
-            # When ``inplace`` is ``True``:
+            * When ``inplace`` is ``True``:
 
                In-place replace every :class:`.Data` object with corresponding parsed `Python` object.
 
                In this case, ``obj`` should be mutable or it can not be changed.
 
-            # When ``inplace`` is ``False`` (default):
+            * When ``inplace`` is ``False`` (default):
 
                render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object;
 
-        # Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
+        * Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding rendered and parsed `Python` object.
 
     * A single :class:`.Data` object.
       In this case, the function does:
@@ -54,20 +54,18 @@ def extract(
     * Other scalar objects returned by a `PyYAML Loader`.
       In this case, the function returns ``obj`` with noting changed.
 
-    :type obj: dict, list, Data
     :param obj:
         What already parsed by `PyYAML Loader`.
 
-    :param jinja2.Environment env:
+    :param env:
         Environment for `Jinja2` template rendering.
 
-    :type context: Mapping[str, Any]
     :param context:
         Variables name-value pairs for `Jinja2` template rendering.
 
-    :param bool inplace:
-        In-place replace :class:`.Data` inside the passed-in ``obj`` argument's with parsed object.
-        When ``True``, the ``obj`` should be mutable dict or list like object.
+    :param inplace:
+        When ``True``, the function will in-place parse and modify :class:`.Data` inside the passed-in ``obj``.
+        The ``obj`` must be a mutable dict or list like object in this case.
 
     :return:
         Final extracted `Python` object

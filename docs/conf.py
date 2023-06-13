@@ -16,10 +16,10 @@ except ImportError:
 project = "jinjyaml"
 copyright = "2023, liu xue yan"
 author = "liu xue yan"
+# full version
 version = importlib_metadata.version(project)
+# major/minor version
 release = ".".join(version.split(".")[:2])
-
-autoclass_content = "both"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,10 +31,11 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
+    "sphinx_inline_tabs",
+    "sphinx_copybutton",
 ]
 source_suffix = {
     ".rst": "restructuredtext",
-    ".txt": "markdown",
     ".md": "markdown",
 }
 
@@ -54,3 +55,16 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/", None),
     "jinja2": ("https://jinja.palletsprojects.com/", None),
 }
+
+# -- Options for autodoc ----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
+
+# Automatically extract typehints when specified and place them in
+# descriptions of the relevant function/method.
+autodoc_typehints = "description"
+
+# # Don't show class signature with the class' name.
+# autodoc_class_signature = "separated"
+
+autoclass_content = "both"
+autodoc_member_order = "bysource"
