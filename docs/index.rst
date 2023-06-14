@@ -1,9 +1,9 @@
 jinjyaml
 ========
 
-:Release: |release|
-:Version: |version|
-:Built at:    |today|
+:Release:   |release|
+:Version:   |version|
+:Built at:  |today|
 
 Application specific YAML tag of Jinja2 template.
 
