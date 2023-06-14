@@ -28,8 +28,7 @@ instead of whole YAML string as a template.
 1. create `YAML` file `1.yml`, with such contents:
 
    ```yml
-   array:
-   !j2 |
+   array: !j2 |
      {% for i in range(n) %}
      - sub{{i}}: {{loop.index}}
      {% endfor %}

@@ -10,9 +10,9 @@ TAG = 'j2'
 
 YAML = string.Template('''
 data: !${TAG} |
-  {% for n in range(3) %}
-  - attr_{{ n }}: {{ loop.index }}
-  {% endfor %}
+    {% for n in range(3) %}
+    - attr_{{ n }}: {{ loop.index }}
+    {% endfor %}
 ''').substitute(TAG=TAG)
 
 DATA = {
