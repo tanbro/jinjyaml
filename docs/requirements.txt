@@ -1,4 +1,4 @@
-Sphinx>=6.2
+Sphinx>=7.0.1
 myst-parser
 importlib_metadata;python_version<"3.8"
 sphinx-inline-tabs
