@@ -111,5 +111,5 @@ We'll get:
          "2.1": {"2.1.1": "three", "2.1.2": "four"}}}
 ```
 
-[jinja2]: https://jinja.palletsprojects.com/ "Jinja is a fast, expressive, extensible templating engine for the Python programming language."
+[jinja2]: https://jinja.palletsprojects.com/ "Jinja is a fast, expressive, extensible templating engine."
 [pyyaml]: https://pyyaml.org/ "PyYAML is a full-featured YAML framework for the Python programming language."
