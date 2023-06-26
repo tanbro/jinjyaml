@@ -9,9 +9,9 @@ except ImportError:
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
 
 project = "jinjyaml"
 copyright = "2023, liu xue yan"
@@ -55,21 +55,24 @@ html_theme_options = {
     "top_of_page_button": "edit",
 }
 
-# Configuration for intersphinx: refer to the Python standard library.
+
+# -- Options for intersphinx ----------------------------------------------------
 intersphinx_mapping = {
     "python": ("https://docs.python.org/", None),
     "jinja2": ("https://jinja.palletsprojects.com/", None),
 }
+
 
 # -- Options for autodoc ----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
 
 # Automatically extract typehints when specified and place them in
 # descriptions of the relevant function/method.
-autodoc_typehints = "description"
+# autodoc_typehints = "description"
+autodoc_typehints = "both"
 
+autoclass_content = "both"
 # # Don't show class signature with the class' name.
 # autodoc_class_signature = "separated"
 
-autoclass_content = "both"
 autodoc_member_order = "bysource"
