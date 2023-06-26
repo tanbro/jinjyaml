@@ -47,7 +47,13 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "requirements.txt"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 # html_theme = "alabaster"
 html_static_path = ["_static"]
-
+html_theme = "furo"
+html_theme_options = {
+    "source_repository": "https://github.com/tanbro/sqlalchemy-dlock",
+    "source_branch": "main",
+    "source_directory": "docs/",
+    "top_of_page_button": "edit",
+}
 
 # Configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {

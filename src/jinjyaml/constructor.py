@@ -2,7 +2,6 @@ from yaml.nodes import ScalarNode
 
 from .data import Data
 
-
 __all__ = ["Constructor"]
 
 
@@ -37,13 +36,7 @@ class Constructor:
         if isinstance(node, ScalarNode):
             source = loader.construct_scalar(node)
             if not isinstance(source, str):
-                raise TypeError(
-                    "`{}` expects `str`, but actual `{}`".format(
-                        self.__class__.__name__, type(source)
-                    )
-                )
+                raise TypeError("`{}` expects `str`, but actual `{}`".format(self.__class__.__name__, type(source)))
         else:
-            raise TypeError(
-                "`{}` does not support `{}`".format(self.__class__.__name__, type(node))
-            )
+            raise TypeError("`{}` does not support `{}`".format(self.__class__.__name__, type(node)))
         return Data(source, type(loader))

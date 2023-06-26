@@ -12,15 +12,15 @@ Contents
 
 .. toctree::
    :titlesonly:
-   :caption: Docs
+   :caption: Documentations
 
-   README <README.md>
-   AUTHORS <AUTHORS.md>
-   CHANGELOG <CHANGELOG.md>
+   README
+   AUTHORS
+   CHANGELOG
 
 .. toctree::
+   :caption: API References
    :maxdepth: 4
-   :caption: API
 
    apidoc/modules
 

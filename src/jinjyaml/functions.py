@@ -85,9 +85,7 @@ def extract(
                 obj[k] = extract(v, env, context, inplace=True)  # type: ignore
         else:
             return {k: extract(v, env, context, inplace=False) for k, v in obj.items()}
-    elif isinstance(obj, Sequence) and not isinstance(
-        obj, (bytearray, bytes, memoryview, str)
-    ):
+    elif isinstance(obj, Sequence) and not isinstance(obj, (bytearray, bytes, memoryview, str)):
         if inplace:
             for i, v in enumerate(obj):
                 obj[i] = extract(v, env, context, inplace=True)  # type: ignore
