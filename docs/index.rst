@@ -7,22 +7,23 @@ jinjyaml
 
 Application specific YAML tag of Jinja2 template.
 
+
 Contents
 --------
 
 .. toctree::
    :titlesonly:
-   :caption: Documentations
+   :caption: Documentation
 
    README
    AUTHORS
    CHANGELOG
 
 .. toctree::
-   :caption: API References
+   :caption: API Reference
    :maxdepth: 4
 
-   apidoc/modules
+   apidocs/index
 
 
 Indices and tables

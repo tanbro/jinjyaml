@@ -2,7 +2,7 @@ __all__ = ["Representer"]
 
 
 class Representer:
-    """Representer for `Jinja2` template tags.
+    """Representer for :class:`jinja2.Template` tags.
 
     When dumping an object into YAML string,
     convert :class:`.Data` to string.

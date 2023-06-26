@@ -94,10 +94,10 @@ import yaml
 env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
 ctor = jy.Constructor()
-yaml.add_constructor("!j2", ctor, yaml.FullLoader)
+yaml.add_constructor("!j2", ctor, yaml.SafeLoader)
 
 with open("main.yml") as fp:
-    doc = yaml.full_load(fp)
+    doc = yaml.safe_load(fp)
 
 obj = jy.extract(doc, env)
 pprint(obj)

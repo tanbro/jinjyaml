@@ -27,13 +27,15 @@ release = ".".join(version.split(".")[:2])
 
 extensions = [
     "myst_parser",
-    "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
+    "autodoc2",
+    "sphinx_tippy",
     "sphinx_inline_tabs",
     "sphinx_copybutton",
 ]
+
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
@@ -63,16 +65,28 @@ intersphinx_mapping = {
 }
 
 
-# -- Options for autodoc ----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
+# -- Options for myst_parser ----------------------------------------------------
+myst_enable_extensions = [
+    "amsmath",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
+]
 
-# Automatically extract typehints when specified and place them in
-# descriptions of the relevant function/method.
-# autodoc_typehints = "description"
-autodoc_typehints = "both"
 
-autoclass_content = "both"
-# # Don't show class signature with the class' name.
-# autodoc_class_signature = "separated"
+# -- Options for autodoc2 ----------------------------------------------------
 
-autodoc_member_order = "bysource"
+autodoc2_packages = [
+    "../src/jinjyaml",
+]
+autodoc2_hidden_objects=["dunder", "private", "inherited"]

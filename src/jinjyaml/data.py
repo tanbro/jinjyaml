@@ -17,15 +17,11 @@ class Data:
     @property
     def source(self) -> str:
         """Source code to make `Jinja2` template.
-
-        :rtype: str
         """
         return self._source
 
     @property
     def loader_type(self) -> Type:
         """`PyYAML Loader` class parsing the tag object.
-
-        :rtype: Type
         """
         return self._loader_type
