@@ -49,8 +49,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "requirements.txt"]
 html_static_path = ["_static"]
 html_theme = "furo"
 html_theme_options = {
-    "source_repository": "https://github.com/tanbro/sqlalchemy-dlock",
-    "source_branch": "main",
+    "source_repository": "https://github.com/tanbro/jinjyaml",
+    "source_branch": "master",
     "source_directory": "docs/",
     "top_of_page_button": "edit",
 }
