@@ -1,7 +1,5 @@
 from warnings import warn
 
-import yaml
-
 __all__ = ["LOADERS"]
 
 LOADERS = []
