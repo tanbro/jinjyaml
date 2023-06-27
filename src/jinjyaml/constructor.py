@@ -35,7 +35,7 @@ class Constructor:
          When we invoke ``yaml.add_constructor``, the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
 
        - Content of the tag **MUST** be text
-    """
+    """  # noqa: E501
 
     def __call__(self, loader, node):
         if isinstance(node, ScalarNode):

@@ -45,7 +45,3 @@ line-length = 128
 
 [tool.isort]
 profile = "black"
-
-[tool.ruff]
-src = ["src"]
-line-length = 128

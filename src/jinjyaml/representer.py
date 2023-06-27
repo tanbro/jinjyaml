@@ -16,9 +16,8 @@ class Representer:
 
         Custom YAML tags start with ``"!"``.
 
-        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag``
-        -- ``yaml.add_representer`` will add the symbol itself.
-    """
+        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag`` -- ``yaml.add_representer`` will add the symbol itself.
+    """  # noqa: E501
 
     def __init__(self, tag: str):
         """

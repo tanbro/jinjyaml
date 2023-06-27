@@ -53,19 +53,16 @@ def extract(
           .. tip:: The ``obj`` must be a mutable :class:`dict` or :class:`list` like object in this case.
 
           .. attention::
-             When the passed-in ``obj`` argument is an instance of :class:`.Data`,
-             it **won't** be changed, even ``inplace`` was set :data:`True`.
-             But if there was a :class:`dict` or :class:`list` object pared by YAML loader,
-             which has cascade :class:`.Data` in it, the cascade part would be replaced.
+             When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set :data:`True`.
+             But if there was a :class:`dict` or :class:`list` object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
              However, return value is just the pared result.
 
         * When :data:`False` (default):
-          render and parse every :class:`.Data` object with corresponding parsed `Python` object,
-          without modify the passed-in object.
+          render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
 
     :return:
         Final extracted `Python` object
-    """
+    """  # noqa: E501
     if isinstance(obj, Data):
         tpl = env.from_string(obj.source) if env else jinja2.Template(obj.source)
         s = tpl.render(**(context or dict()))

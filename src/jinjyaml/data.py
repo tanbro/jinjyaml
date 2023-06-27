@@ -16,12 +16,10 @@ class Data:
 
     @property
     def source(self) -> str:
-        """Source code to make `Jinja2` template.
-        """
+        """Source code to make `Jinja2` template."""
         return self._source
 
     @property
     def loader_type(self) -> Type:
-        """`PyYAML Loader` class parsing the tag object.
-        """
+        """`PyYAML Loader` class parsing the tag object."""
         return self._loader_type
