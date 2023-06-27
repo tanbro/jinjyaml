@@ -1,9 +1,29 @@
 jinjyaml
 ========
 
-:Release:   |release|
-:Version:   |version|
-:Built at:  |today|
+.. image:: https://img.shields.io/github/actions/workflow/status/tanbro/jinjyaml/python-package.yml
+   :alt: GitHub Workflow Status (with event)
+   :target: https://github.com/tanbro/jinjyaml/actions/workflows/python-package.yml
+
+.. image:: https://img.shields.io/github/v/tag/tanbro/jinjyaml
+   :alt: GitHub tag (latest SemVer pre-release)
+   :target: https://github.com/tanbro/jinjyaml/
+
+.. image:: https://img.shields.io/pypi/v/jinjyaml
+   :alt: PyPI
+   :target: https://pypi.org/project/jinjyaml/
+
+.. image:: https://img.shields.io/readthedocs/jinjyaml
+   :alt: Read the Docs
+   :target: https://jinjyaml.readthedocs.io/
+
+
+========== ========= =========
+Release    Version   Built at
+========== ========= =========
+|release|  |version| |today|
+========== ========= =========
+
 
 Application specific YAML tag of Jinja2 template.
 
@@ -12,8 +32,8 @@ Contents
 --------
 
 .. toctree::
-   :titlesonly:
    :caption: Documentation
+   :titlesonly:
 
    README
    AUTHORS
@@ -21,7 +41,7 @@ Contents
 
 .. toctree::
    :caption: API Reference
-   :maxdepth: 4
+   :titlesonly:
 
    apidocs/index
 

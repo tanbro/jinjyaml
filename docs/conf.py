@@ -86,7 +86,5 @@ myst_enable_extensions = [
 
 # -- Options for autodoc2 ----------------------------------------------------
 
-autodoc2_packages = [
-    "../src/jinjyaml",
-]
-autodoc2_hidden_objects=["dunder", "private", "inherited"]
+autodoc2_packages = ["../src/jinjyaml"]
+autodoc2_hidden_objects = ["dunder", "private", "inherited"]
