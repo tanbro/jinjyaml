@@ -60,7 +60,8 @@ def extract(
              However, return value is just the pared result.
 
         * When :data:`False` (default):
-          render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
+          render and parse every :class:`.Data` object with corresponding parsed `Python` object,
+          without modify the passed-in object.
 
     :return:
         Final extracted `Python` object

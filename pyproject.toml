@@ -41,6 +41,11 @@ version_scheme = "guess-next-dev" # guess-next-dev or post-release
 write_to = "src/jinjyaml/version.py"
 
 [tool.black]
-line-length = 127
+line-length = 128
+
 [tool.isort]
 profile = "black"
+
+[tool.ruff]
+src = ["src"]
+line-length = 128

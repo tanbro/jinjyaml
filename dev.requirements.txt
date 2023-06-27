@@ -3,4 +3,6 @@
 
 -e .
 -r docs/requirements.txt
+pre-commit
+ruff
 build
