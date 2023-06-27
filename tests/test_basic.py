@@ -1,6 +1,7 @@
 import pickle
 import string
 import unittest
+from random import randint
 
 import yaml
 
@@ -49,6 +50,21 @@ class BasicTestCase(unittest.TestCase):
             jy.extract(obj, inplace=True)
             self.assertListEqual(obj["data"], DATA["data"])
 
+    def test_inplace_extract_list(self):
+        s = string.Template(
+            """
+            - !${TAG} |
+                {% for _ in range(n) %}
+                - {{ loop.index }}
+                {% endfor %}
+            """
+        ).substitute(TAG=TAG)
+        for Loader in LOADERS:
+            n = randint(1, 100)
+            obj = yaml.load(s, Loader)
+            jy.extract(obj, inplace=True, context={"n": n})
+            self.assertListEqual(obj[0], [x + 1 for x in range(n)])
+
     def test_load_from_represent(self):
         for Loader in LOADERS:
             obj1 = yaml.load(YAML, Loader)
@@ -67,12 +83,12 @@ class BasicTestCase(unittest.TestCase):
             self.assertListEqual(data1["data"], data2["data"])
 
     def test_tag_type_complex(self):
-        string = """
+        s = """
         x: !j2 [1,2,3]
         """
         for Loader in LOADERS:
             with self.assertRaises(TypeError):
-                yaml.load(string, Loader)
+                yaml.load(s, Loader)
 
 
 class SerializationTestCase(unittest.TestCase):

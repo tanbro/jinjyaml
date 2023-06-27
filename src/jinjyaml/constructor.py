@@ -40,7 +40,7 @@ class Constructor:
     def __call__(self, loader, node):
         if isinstance(node, ScalarNode):
             source = loader.construct_scalar(node)
-            if not isinstance(source, str):
+            if not isinstance(source, str):  # pragma: no cover
                 raise TypeError("`{}` expects `str`, but actual `{}`".format(self.__class__.__name__, type(source)))
         else:
             raise TypeError("`{}` does not support `{}`".format(self.__class__.__name__, type(node)))
