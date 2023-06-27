@@ -2,5 +2,6 @@
     "MD028": false,
     "MD025": {
         "front_matter_title": ""
-    }
+    },
+    "line-length": false
 }

@@ -1,14 +1,16 @@
 import unittest
 from contextlib import ExitStack
-from os import path
-from textwrap import dedent
+from pathlib import Path
 
 import jinja2
-import jinjyaml
 import yaml
 
-TAG = 'j2'
-SEARCH_PATH = 'tests'
+import jinjyaml as jy
+
+from .loaders import LOADERS
+
+TAG = "j2"
+SEARCH_PATH = "tests"
 
 
 class IncludeTestCase(unittest.TestCase):
@@ -16,34 +18,48 @@ class IncludeTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.j2_env = jinja2.Environment(
-            loader=jinja2.FileSystemLoader(SEARCH_PATH)
-        )
-        constructor = jinjyaml.Constructor()
-        yaml.add_constructor('!{}'.format(TAG), constructor)
+        cls.j2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(SEARCH_PATH))
+        ctor = jy.Constructor()
+        for Loader in LOADERS:
+            yaml.add_constructor(f"!{TAG}", ctor, Loader)
+        rprt = jy.Representer(TAG)
+        yaml.add_representer(jy.Data, rprt)
 
-    def test_include_mapping(self):
-        doc = yaml.load(
-            dedent('''
-            foo: !j2 |
-                {% include "child-1.yml" %}
-                {% include "child-2.yml" %}
-            '''),
-            yaml.Loader
-        )
+    def test_simple_include(self):
+        files = "child-1.yml", "child-2.yml"
+        string = """
+        foo: !j2 |
+            {% for fname in files %}
+            {% filter indent %}
+            {% include fname %}
+            {% endfilter %}
+            {% endfor %}
+        """
+        for Loader in LOADERS:
+            doc = yaml.load(string, Loader)
+            data = jy.extract(doc, env=self.j2_env, context={"files": files})
+            foo = dict()
+            with ExitStack() as stack:
+                for fp in (stack.enter_context(Path(SEARCH_PATH, fname).open()) for fname in files):
+                    foo.update(yaml.load(fp, Loader))
+            self.assertDictEqual(data, {"foo": foo}, f"{Loader}")
 
-        data = jinjyaml.extract(doc, env=self.j2_env)
+    def test_cascade_include(self):
+        string = """
+        foo: !j2 |
+            {% filter indent %}
+            {% include "child-x.yml.j2" %}
+            {% endfilter %}
+        """
+        for Loader in LOADERS:
+            doc = yaml.load(string, Loader)
+            print("\n", doc)
+            data = jy.extract(doc, env=self.j2_env, context={"value": "this is value"})
+            print(data)
+            x = jy.extract(data, env=self.j2_env)
+            print(x)
+            break
 
-        foo = dict()
-        with ExitStack() as stack:
-            files = [
-                stack.enter_context(open(path.join(SEARCH_PATH, fname)))
-                for fname in ("child-1.yml", "child-2.yml")
-            ]
-            for file in files:
-                foo.update(yaml.load(file, yaml.Loader))
-        self.assertDictEqual(data, {"foo": foo})
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

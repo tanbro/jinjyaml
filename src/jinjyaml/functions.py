@@ -70,8 +70,9 @@ def extract(
             template = env.from_string(obj.source)
         if context is None:
             context = dict()
-        s = template.render(**context)
-        return yaml.load(s, obj.loader_type)
+        string = template.render(**context)
+        doc = yaml.load(string, obj.loader_type)
+        return extract(doc)
     elif isinstance(obj, Mapping):
         if inplace:
             for k, v in obj.items():

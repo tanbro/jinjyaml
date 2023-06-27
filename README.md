@@ -61,6 +61,7 @@ We have such YAML files:
 - `sub-1.yml`:
 
   ```yaml
+
   "1.1": one
   "1.2": two
   ```
@@ -68,6 +69,7 @@ We have such YAML files:
 - `sub-2.yml`:
 
   ```yaml
+
   "2.1":
     "2.1.1": three
     "2.1.2": four
@@ -78,8 +80,13 @@ We have such YAML files:
   ```yaml
   foo: !j2 |
 
+    {% filter indent %}
     {% include "sub-1.yml" %}
+    {% endfilter %}
+
+    {% filter indent %}
     {% include "sub-2.yml" %}
+    {% endfilter %}
   ```
 
 execute python code:
@@ -110,6 +117,10 @@ We'll get:
          "1.2": "two",
          "2.1": {"2.1.1": "three", "2.1.2": "four"}}}
 ```
+
+> **NOTE:**
+>
+> Since [Jinja2][]'s [`include`](https://jinja.palletsprojects.com/en/3.0.x/templates/#include) and [`indent`](https://jinja.palletsprojects.com/en/3.0.x/templates/#jinja-filters.indent) do not work very nice with indention languages like Python or YAML, it's not advised to use the feature in a complex case.
 
 [jinja2]: https://jinja.palletsprojects.com/ "Jinja is a fast, expressive, extensible templating engine."
 [pyyaml]: https://pyyaml.org/ "PyYAML is a full-featured YAML framework for the Python programming language."

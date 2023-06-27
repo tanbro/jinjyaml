@@ -4,22 +4,26 @@ import unittest
 
 import yaml
 
-import jinjyaml
+import jinjyaml as jy
 
-TAG = 'j2'
+from .loaders import LOADERS
 
-YAML = string.Template('''
-data: !${TAG} |
-    {% for n in range(3) %}
-    - attr_{{ n }}: {{ loop.index }}
-    {% endfor %}
-''').substitute(TAG=TAG)
+TAG = "j2"
+
+YAML = string.Template(
+    """
+    data: !${TAG} |
+        {% for n in range(3) %}
+        - attr_{{ n }}: {{ loop.index }}
+        {% endfor %}
+    """
+).substitute(TAG=TAG)
 
 DATA = {
-    'data': [
-        {'attr_0': 1},
-        {'attr_1': 2},
-        {'attr_2': 3},
+    "data": [
+        {"attr_0": 1},
+        {"attr_1": 2},
+        {"attr_2": 3},
     ]
 }
 
@@ -27,45 +31,59 @@ DATA = {
 class BasicTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        constructor = jinjyaml.Constructor()
-        yaml.add_constructor('!{}'.format(TAG), constructor)
-        representer = jinjyaml.Representer(TAG)
-        yaml.add_representer(jinjyaml.Data, representer)
+        ctor = jy.Constructor()
+        for Loader in LOADERS:
+            yaml.add_constructor(f"!{TAG}", ctor, Loader)
+        rprt = jy.Representer(TAG)
+        yaml.add_representer(jy.Data, rprt)
 
     def test_construct(self):
-        obj = yaml.load(YAML, yaml.Loader)
-        result = jinjyaml.extract(obj)
-        self.assertListEqual(result['data'], DATA['data'])
+        for Loader in LOADERS:
+            obj = yaml.load(YAML, Loader)
+            result = jy.extract(obj)
+            self.assertListEqual(result["data"], DATA["data"], f"{Loader}")
 
     def test_inplace_extract(self):
-        obj = yaml.load(YAML, yaml.Loader)
-        jinjyaml.extract(obj, inplace=True)
-        self.assertListEqual(obj['data'], DATA['data'])
+        for Loader in LOADERS:
+            obj = yaml.load(YAML, Loader)
+            jy.extract(obj, inplace=True)
+            self.assertListEqual(obj["data"], DATA["data"])
 
-    def test_represent_construct(self):
-        obj1 = yaml.load(YAML, yaml.Loader)
-        data1 = jinjyaml.extract(obj1)
-        txt = yaml.dump(data1)
-        obj2 = yaml.load(txt, yaml.Loader)
-        data2 = jinjyaml.extract(obj2)
-        self.assertListEqual(data1['data'], data2['data'])
+    def test_load_from_represent(self):
+        for Loader in LOADERS:
+            obj1 = yaml.load(YAML, Loader)
+            txt = yaml.dump(obj1)
+            obj2 = yaml.load(txt, Loader)
+            data2 = jy.extract(obj2)
+            self.assertListEqual(DATA["data"], data2["data"])
+
+    def test_reload_extracted(self):
+        for Loader in LOADERS:
+            obj1 = yaml.load(YAML, Loader)
+            data1 = jy.extract(obj1)
+            txt = yaml.dump(data1)
+            obj2 = yaml.load(txt, Loader)
+            data2 = jy.extract(obj2)
+            self.assertListEqual(data1["data"], data2["data"])
 
 
 class SerializationTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        constructor = jinjyaml.Constructor()
-        yaml.add_constructor('!{}'.format(TAG), constructor)
-        representer = jinjyaml.Representer(TAG)
-        yaml.add_representer(jinjyaml.Data, representer)
+        ctor = jy.Constructor()
+        for Loader in LOADERS:
+            yaml.add_constructor(f"!{TAG}", ctor, Loader)
+        rprt = jy.Representer(TAG)
+        yaml.add_representer(jy.Data, rprt)
 
     def test_pickle(self):
-        obj1 = yaml.load(YAML, yaml.Loader)
-        data = pickle.dumps(obj1)
-        obj2 = pickle.loads(data)
-        obj2 = jinjyaml.extract(obj2)
-        self.assertListEqual(obj2['data'], DATA['data'])
+        for Loader in LOADERS:
+            obj1 = yaml.load(YAML, Loader)
+            data = pickle.dumps(obj1)
+            obj2 = pickle.loads(data)
+            obj2 = jy.extract(obj2)
+            self.assertListEqual(obj2["data"], DATA["data"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
