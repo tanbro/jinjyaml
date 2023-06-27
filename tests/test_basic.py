@@ -66,6 +66,14 @@ class BasicTestCase(unittest.TestCase):
             data2 = jy.extract(obj2)
             self.assertListEqual(data1["data"], data2["data"])
 
+    def test_tag_type_complex(self):
+        string = """
+        x: !j2 [1,2,3]
+        """
+        for Loader in LOADERS:
+            with self.assertRaises(TypeError):
+                yaml.load(string, Loader)
+
 
 class SerializationTestCase(unittest.TestCase):
     @classmethod
@@ -73,8 +81,6 @@ class SerializationTestCase(unittest.TestCase):
         ctor = jy.Constructor()
         for Loader in LOADERS:
             yaml.add_constructor(f"!{TAG}", ctor, Loader)
-        rprt = jy.Representer(TAG)
-        yaml.add_representer(jy.Data, rprt)
 
     def test_pickle(self):
         for Loader in LOADERS:

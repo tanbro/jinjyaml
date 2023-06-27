@@ -1,6 +1,7 @@
 import unittest
 from contextlib import ExitStack
 from pathlib import Path
+from secrets import token_hex
 
 import jinja2
 import yaml
@@ -22,8 +23,6 @@ class IncludeTestCase(unittest.TestCase):
         ctor = jy.Constructor()
         for Loader in LOADERS:
             yaml.add_constructor(f"!{TAG}", ctor, Loader)
-        rprt = jy.Representer(TAG)
-        yaml.add_representer(jy.Data, rprt)
 
     def test_simple_include(self):
         files = "child-1.yml", "child-2.yml"
@@ -53,12 +52,13 @@ class IncludeTestCase(unittest.TestCase):
         """
         for Loader in LOADERS:
             doc = yaml.load(string, Loader)
-            print("\n", doc)
-            data = jy.extract(doc, env=self.j2_env, context={"value": "this is value"})
-            print(data)
-            x = jy.extract(data, env=self.j2_env)
-            print(x)
-            break
+            value = token_hex()
+            data = jy.extract(doc, env=self.j2_env, context={"value": value})
+            o = jy.extract(data, env=self.j2_env)
+            foo = o["foo"]
+            x = foo["x"]
+            y = x["y"]
+            self.assertEqual(y.strip(), value)
 
 
 if __name__ == "__main__":
