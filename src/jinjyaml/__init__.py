@@ -9,4 +9,4 @@ from .constructor import *
 from .data import *
 from .functions import *
 from .representer import *
-from .version import version as __version__
+from .version import __version__, __version_tuple__
