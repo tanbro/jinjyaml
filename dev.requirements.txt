@@ -3,6 +3,6 @@
 
 -e .
 -r docs/requirements.txt
+build
 pre-commit
 ruff
-build
