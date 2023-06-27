@@ -27,4 +27,4 @@ class Representer:
         self._tag = tag
 
     def __call__(self, dumper, data):
-        return dumper.represent_scalar("!{}".format(self._tag), data.source)
+        return dumper.represent_scalar(f"!{self._tag}", data.source)
