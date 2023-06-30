@@ -1,10 +1,4 @@
 [run]
-omit =
-    test/*
-    tests/*
-    .venv/*
-    env/*
-    venv/*
-    ENV/*
-    env.bak/*
-    venv.bak/*
+branch = True
+source = src
+relative_files = True
