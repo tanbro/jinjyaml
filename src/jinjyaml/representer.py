@@ -9,19 +9,20 @@ class Representer:
 
     Add the representer to `PyYAML Dumper` as below::
 
-        representer = jinjyaml.Representer('j2')  # No "!" here !!!
+        representer = jinjyaml.Representer("j2")  # No "!" here !!!
         yaml.add_representer(Node, representer)
 
-    .. attention::
-
-        Custom YAML tags start with ``"!"``.
-
-        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag`` -- ``yaml.add_representer`` will add the symbol itself.
     """  # noqa: E501
 
-    def __init__(self, tag: str):
+    def __init__(self, tag):
         """
-        :param str tag: YAML tag
+        Args:
+            tag(str): YAML tag name
+
+            Attention:
+                Custom YAML tag's name starts with ``"!"``.
+                But we **MUST NOT** put a ``"!"`` at the beginning here,
+                because :func:`yaml.add_representer` will add the symbol itself.
         """
         self._tag = tag
 

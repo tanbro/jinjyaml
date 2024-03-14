@@ -21,19 +21,17 @@ class Constructor:
         # Attention: tag name starts with "!"
 
         # Add to default loader
-        yaml.add_constructor('!j2', ctor)
+        yaml.add_constructor("!j2", ctor)
         # or: Add to CLoader
-        yaml.add_constructor('!j2', ctor, yaml.CLoader)
+        yaml.add_constructor("!j2", ctor, yaml.CLoader)
         # or: Add to SafeLoader
-        yaml.add_constructor('!j2', ctor, yaml.SafeLoader)
+        yaml.add_constructor("!j2", ctor, yaml.SafeLoader)
         # or: Add to other Loaders ...
 
-    .. attention::
-
+    Attention:
        - Custom YAML tag starts with ``"!"``.
-
-         When we invoke ``yaml.add_constructor``, the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
-
+         When we invoke ``yaml.add_constructor``,
+         the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
        - Content of the tag **MUST** be text
     """  # noqa: E501
 

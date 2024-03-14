@@ -21,6 +21,9 @@ version = importlib_metadata.version(project)
 # major/minor version
 release = ".".join(version.split(".")[:2])
 
+autodoc_mock_imports = ["typing", "jinja2"]
+autoclass_content = "both"
+autodoc_member_order = "bysource"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -35,6 +38,7 @@ extensions = [
     "sphinx_inline_tabs",
     "sphinx_copybutton",
 ]
+
 
 source_suffix = {
     ".rst": "restructuredtext",
@@ -63,6 +67,11 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/", None),
     "jinja2": ("https://jinja.palletsprojects.com/", None),
 }
+
+# -- Options for Napoleon settings ---------------------------------------
+napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = True
 
 
 # -- Options for myst_parser ----------------------------------------------------

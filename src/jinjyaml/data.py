@@ -4,7 +4,7 @@ __all__ = ["Data"]
 
 
 class Data:
-    """A `PyYAML` Custom tag represents a `Jinja2` template object."""
+    """A `PyYAML` Custom tag represents a `jinja2.Template` object."""
 
     def __init__(
         self,
@@ -16,7 +16,7 @@ class Data:
 
     @property
     def source(self) -> str:
-        """Source code to make `Jinja2` template."""
+        """Source code to make `jinja2.Template`"""
         return self._source
 
     @property

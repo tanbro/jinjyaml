@@ -16,51 +16,53 @@ def extract(
 ) -> Any:
     """Recursively render and parse template tag objects in a YAML doc-tree.
 
-    :param obj: What already parsed by `PyYAML Loader`.
+    Args:
 
-        It may be:
+        obj: Object like list or dictionary contains :class:`.Data` instances.
 
-        * A mapping or sequence object returned by `PyYAML Loader`.
+            It may be:
 
-          In this case, the function does:
+            * A mapping or sequence object returned by `PyYAML Loader`.
 
-          #. Recursively search inside the ``obj`` for :class:`.Data` objects.
-          #. Render each found :meth:`.Data.source` as a :class:`jinja2.Template`.
-          #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
-          #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding parsed `Python` object.
+              In this case, the function does:
 
-        * A single :class:`.Data` object.
+              #. Recursively search inside the ``obj`` for :class:`.Data` objects.
+              #. Render each found :meth:`.Data.source` as a :class:`jinja2.Template`.
+              #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
+              #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding parsed `Python` object.
 
-          In this case, the function does:
+            * A single :class:`.Data` object.
 
-          #. Render :meth:`.Data.source` as a :class:`jinja2.Template`.
-          #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
-          #. Return the parsed `Python` object.
+              In this case, the function does:
 
-        * Other scalar objects returned by a `PyYAML Loader`.
+              #. Render :meth:`.Data.source` as a :class:`jinja2.Template`.
+              #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
+              #. Return the parsed `Python` object.
 
-          In this case, the function directly returns ``obj`` with noting changed.
+            * Other scalar objects returned by a `PyYAML Loader`:
 
-    :param env: `Jinja2` environment for template rendering.
+              In this case, the function directly returns ``obj`` with noting changed.
 
-    :param context: Variables name-value pairs for `Jinja2` template rendering.
+        env: `Jinja2` environment for template rendering.
 
-    :param inplace: Whether to make an in-place replace on :class:`.Data` objects inside the passed-in ``obj``.
+        context: Variables name-value pairs for `Jinja2` template rendering.
 
-        * When :data:`True`:
-          In-place replace every :class:`.Data` object with corresponding parsed `Python` object inside the passed-in ``obj``.
+        inplace: Whether to make an in-place replace on :class:`.Data` objects inside the passed-in ``obj``.
 
-          .. tip:: The ``obj`` must be a mutable :class:`dict` or :class:`list` like object in this case.
+            * When :data:`True`:
+              In-place replace every :class:`.Data` object with corresponding parsed `Python` object inside the passed-in ``obj``.
 
-          .. attention::
-             When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set :data:`True`.
-             But if there was a :class:`dict` or :class:`list` object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
-             However, return value is just the pared result.
+            Tip: The ``obj`` must be a mutable :class:`dict` or :class:`list` like object in this case.
 
-        * When :data:`False` (default):
-          render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
+            Note:
+                When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set :data:`True`.
+                But if there was a :class:`dict` or :class:`list` object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
+                However, return value is just the pared result.
 
-    :return:
+            * When :data:`False` (default):
+              render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
+
+    Returns:
         Final extracted `Python` object
     """  # noqa: E501
     if isinstance(obj, Data):
