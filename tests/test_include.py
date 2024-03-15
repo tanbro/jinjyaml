@@ -36,7 +36,7 @@ class IncludeTestCase(unittest.TestCase):
         """
         for Loader in LOADERS:
             doc = yaml.load(string, Loader)
-            data = jy.extract(doc, env=self.j2_env, context={"files": files})
+            data = jy.extract(doc, Loader, env=self.j2_env, context={"files": files})
             foo = dict()
             with ExitStack() as stack:
                 for fp in (stack.enter_context(Path(SEARCH_PATH, fname).open()) for fname in files):
@@ -53,8 +53,8 @@ class IncludeTestCase(unittest.TestCase):
         for Loader in LOADERS:
             doc = yaml.load(string, Loader)
             value = token_hex()
-            data = jy.extract(doc, env=self.j2_env, context={"value": value})
-            o = jy.extract(data, env=self.j2_env)
+            data = jy.extract(doc, Loader, env=self.j2_env, context={"value": value})
+            o = jy.extract(data, Loader, env=self.j2_env)
             foo = o["foo"]
             x = foo["x"]
             y = x["y"]

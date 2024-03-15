@@ -2,8 +2,6 @@ from warnings import warn
 
 __all__ = ["LOADERS"]
 
-LOADERS = []
-
 from yaml import FullLoader, Loader, SafeLoader, UnsafeLoader
 
 LOADERS = [SafeLoader, Loader, FullLoader, UnsafeLoader]

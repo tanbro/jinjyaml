@@ -1,6 +1,0 @@
-# The file defines requirements for the project's local development.
-# It's NOT package install dependencies.
-
--e .
--r docs/requirements.txt
-build

@@ -1,12 +1,11 @@
 """
 Application specific tag of Jinja2 template in PyYAML.
 
-It may be useful if you only want to render special tag nodes in the document,
-instead of whole YAML string as a template.
-"""
+It may be useful if you only want to render special tag nodes in the document, instead of whole YAML string as a template.
+"""  # noqa: E501
 
-from .constructor import *
-from .data import *
-from .functions import *
-from .representer import *
-from .version import __version__, __version_tuple__
+from ._version import __version__, __version_tuple__
+from .constructor import *  # noqa: F403
+from .data import *  # noqa: F403
+from .functions import *  # noqa: F403
+from .representer import *  # noqa: F403

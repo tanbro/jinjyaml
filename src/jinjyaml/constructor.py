@@ -21,27 +21,25 @@ class Constructor:
         # Attention: tag name starts with "!"
 
         # Add to default loader
-        yaml.add_constructor('!j2', ctor)
+        yaml.add_constructor("!j2", ctor)
         # or: Add to CLoader
-        yaml.add_constructor('!j2', ctor, yaml.CLoader)
+        yaml.add_constructor("!j2", ctor, yaml.CLoader)
         # or: Add to SafeLoader
-        yaml.add_constructor('!j2', ctor, yaml.SafeLoader)
+        yaml.add_constructor("!j2", ctor, yaml.SafeLoader)
         # or: Add to other Loaders ...
 
-    .. attention::
-
+    Attention:
        - Custom YAML tag starts with ``"!"``.
-
-         When we invoke ``yaml.add_constructor``, the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
-
+         When we invoke ``yaml.add_constructor``,
+         the ``tag`` parameter **MUST** have a single ``"!"`` at the beginning.
        - Content of the tag **MUST** be text
-    """
+    """  # noqa: E501
 
     def __call__(self, loader, node):
         if isinstance(node, ScalarNode):
             source = loader.construct_scalar(node)
-            if not isinstance(source, str):
-                raise TypeError("`{}` expects `str`, but actual `{}`".format(self.__class__.__name__, type(source)))
+            if not isinstance(source, str):  # pragma: no cover
+                raise ValueError("`{}` expects `str`, but actual `{}`".format(self.__class__, type(source)))
         else:
-            raise TypeError("`{}` does not support `{}`".format(self.__class__.__name__, type(node)))
-        return Data(source, type(loader))
+            raise TypeError("`{}` does not support `{}` node".format(self.__class__, type(node)))
+        return Data(source)

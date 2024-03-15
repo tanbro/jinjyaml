@@ -1,10 +1,8 @@
 [run]
+branch = True
+source = src
+relative_files = True
 omit =
-    test/*
-    tests/*
-    .venv/*
-    env/*
-    venv/*
-    ENV/*
-    env.bak/*
-    venv.bak/*
+    _version.py
+    _yaml_types.py
+    _yaml_types_backward.py

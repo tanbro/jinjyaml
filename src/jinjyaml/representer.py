@@ -1,6 +1,9 @@
+from dataclasses import dataclass
+
 __all__ = ["Representer"]
 
 
+@dataclass
 class Representer:
     """Representer for :class:`jinja2.Template` tags.
 
@@ -9,22 +12,19 @@ class Representer:
 
     Add the representer to `PyYAML Dumper` as below::
 
-        representer = jinjyaml.Representer('j2')  # No "!" here !!!
+        representer = jinjyaml.Representer("j2")  # No "!" here !!!
         yaml.add_representer(Node, representer)
 
-    .. attention::
+    """  # noqa: E501
 
-        Custom YAML tags start with ``"!"``.
+    tag: str
+    """YAML tag name for include statement
 
-        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag``
-        -- ``yaml.add_representer`` will add the symbol itself.
+    Attention:
+        Custom YAML tag's name starts with ``"!"``.
+        But we **MUST NOT** put a ``"!"`` at the beginning here,
+        because :func:`yaml.add_representer` will add the symbol itself.
     """
 
-    def __init__(self, tag: str):
-        """
-        :param str tag: YAML tag
-        """
-        self._tag = tag
-
     def __call__(self, dumper, data):
-        return dumper.represent_scalar(f"!{self._tag}", data.source)
+        return dumper.represent_scalar(f"!{self.tag}", data.source)

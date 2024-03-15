@@ -1,5 +1,5 @@
 # setuptools_scm version file
-src/**/version.py
+src/**/_version.py
 
 # test-results aircraft
 test-results
