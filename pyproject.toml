@@ -4,14 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jinjyaml"
-authors = [
-    {name = "liu xue yan", email = "liu_xue_yan@foxmail.com"},
-]
+authors = [{ name = "liu xue yan", email = "liu_xue_yan@foxmail.com" }]
 description = "Application specific YAML tag of Jinja2 template"
 readme = "README.md"
 requires-python = ">=3.7"
-keywords = ["jinja", "jinja2", "template", "template-engine", "yaml", "yaml-tag"]
-license = {text = "BSD-3-Clause"}
+keywords = [
+    "jinja",
+    "jinja2",
+    "template",
+    "template-engine",
+    "yaml",
+    "yaml-tag",
+]
+license = { text = "BSD-3-Clause" }
 classifiers = [
     "License :: OSI Approved :: BSD License",
     "Development Status :: 5 - Production/Stable",
@@ -19,11 +24,12 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Text Processing :: Markup"
+    "Topic :: Text Processing :: Markup",
 ]
 dependencies = [
     "Jinja2>=3.0,<4.0",
-    "PyYAML>=5.0,<7.0"
+    "PyYAML>=5.0,<7.0",
+    "typing-extensions; python_version<'3.11'",
 ]
 dynamic = ["version"]
 
@@ -34,10 +40,10 @@ repository = "https://github.com/tanbro/jinjyaml"
 changelog = "https://github.com/tanbro/jinjyaml/blob/master/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
-where = ["src"]  # list of folders that contain the packages (["."] by default)
+where = ["src"] # list of folders that contain the packages (["."] by default)
 
 [tool.setuptools_scm]
-version_scheme = "guess-next-dev" # guess-next-dev or post-release
+version_scheme = "guess-next-dev"    # guess-next-dev or post-release
 write_to = "src/jinjyaml/version.py"
 
 [tool.black]

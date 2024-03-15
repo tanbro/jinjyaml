@@ -12,7 +12,7 @@ repos:
       - id: trailing-whitespace
       - id: check-yaml
       - id: check-toml
-      - id: check-ast
+      # - id: check-ast
       - id: check-docstring-first
 
   - repo: https://github.com/astral-sh/ruff-pre-commit

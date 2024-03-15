@@ -21,7 +21,15 @@ version = importlib_metadata.version(project)
 # major/minor version
 release = ".".join(version.split(".")[:2])
 
-autodoc_mock_imports = ["typing", "jinja2"]
+# -- Options for autodoc ----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
+
+autodoc_mock_imports = ["typing", "jinja2", "yaml"]
+# Automatically extract typehints when specified and place them in
+# descriptions of the relevant function/method.
+autodoc_typehints = "both"
+# Don't show class signature with the class' name.
+# autodoc_class_signature = "separated"
 autoclass_content = "both"
 autodoc_member_order = "bysource"
 
@@ -33,7 +41,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
-    "autodoc2",
+    # "autodoc2",
     "sphinx_tippy",
     "sphinx_inline_tabs",
     "sphinx_copybutton",
@@ -93,7 +101,7 @@ myst_enable_extensions = [
 ]
 
 
-# -- Options for autodoc2 ----------------------------------------------------
+# # -- Options for autodoc2 ----------------------------------------------------
 
-autodoc2_packages = ["../src/jinjyaml"]
-autodoc2_hidden_objects = ["dunder", "private", "inherited"]
+# autodoc2_packages = ["../src/jinjyaml"]
+# autodoc2_hidden_objects = ["dunder", "private", "inherited"]
