@@ -6,9 +6,9 @@ import yaml
 
 from .data import Data
 
-if sys.version_info < (3, 12):
+if sys.version_info < (3, 12):  # pragma: no cover
     from ._yaml_types_backward import TYamlLoaderTypes
-else:
+else:  # pragma: no cover
     from ._yaml_types import TYamlLoaderTypes
 
 
@@ -34,8 +34,8 @@ def extract(
 
               In this case, the function does:
 
-              #. Recursively search inside the ``obj`` for :class:`.Data` objects.
-              #. Render each found :meth:`.Data.source` as a :class:`jinja2.Template`.
+              #. Recursively search inside ``obj`` for :class:`.Data` objects.
+              #. Render :attr:`.Data.source` as string source of :class:`jinja2.Template` of each found :class:`.Data` object.
               #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
               #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding parsed `Python` object.
 
@@ -43,7 +43,7 @@ def extract(
 
               In this case, the function does:
 
-              #. Render :meth:`.Data.source` as a :class:`jinja2.Template`.
+              #. Render it's :meth:`.Data.source` as string source of :class:`jinja2.Template`.
               #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
               #. Return the parsed `Python` object.
 
@@ -51,25 +51,24 @@ def extract(
 
               In this case, the function directly returns ``obj`` with noting changed.
 
-        loader_type: use this type of `PyYAML` Loader
+        loader_type: The `PyYAML Loader` who loads ``obj``
         env: `Jinja2` environment for template rendering.
         context: Variables name-value pairs for `Jinja2` template rendering.
 
-        inplace: Whether to make an in-place replace on :class:`.Data` objects inside the passed-in ``obj``.
+        inplace: Whether to make an in-place replacement on :class:`.Data` objects inside ``obj``.
 
             * When :data:`True`:
               In-place replace every :class:`.Data` object with corresponding parsed `Python` object inside the passed-in ``obj``.
-
-            Tip:
-                The ``obj`` must be a mutable :class:`dict` or :class:`list` like object in this case.
-
-            Note:
-                When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set :data:`True`.
-                But if there was a :class:`dict` or :class:`list` object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
-                However, return value is just the pared result.
-
             * When :data:`False` (default):
               render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
+
+            Tip:
+                The ``obj`` must be a mutable :class:`dict` or :class:`list` like object if ``inplace`` is :data:`True`.
+
+            Note:
+                When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set to :data:`True`.
+                But if there was a mutable :class:`dict` or :class:`list` like object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
+                However, return value is just the parsed result.
 
     Returns:
         Final extracted `Python` object
@@ -81,7 +80,7 @@ def extract(
         return extract(d, loader_type, env, context, inplace)
     elif isinstance(obj, Mapping):
         if inplace:
-            if not isinstance(obj, MutableMapping):
+            if not isinstance(obj, MutableMapping):  # pragma: no cover
                 raise ValueError(f"{obj!r} is not mutable")
             for k, v in obj.items():
                 obj[k] = extract(v, loader_type, env, context, inplace)
@@ -89,7 +88,7 @@ def extract(
             return {k: extract(v, loader_type, env, context, inplace) for k, v in obj.items()}
     elif isinstance(obj, Sequence) and not isinstance(obj, (bytearray, bytes, memoryview, str)):
         if inplace:
-            if not isinstance(obj, MutableSequence):
+            if not isinstance(obj, MutableSequence):  # pragma: no cover
                 raise ValueError(f"{obj!r} is not mutable")
             for i, v in enumerate(obj):
                 obj[i] = extract(v, loader_type, env, context, inplace)
