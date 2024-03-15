@@ -47,7 +47,7 @@ jobs:
 
       - name: Install project and dependent tools
         run: |
-          pip install -e . -r tests/requirements.txt coverage ruff
+          pip install -e . coverage ruff
       - name: Check with ruff
         run: |
           ruff check .
