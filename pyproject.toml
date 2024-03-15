@@ -43,8 +43,8 @@ changelog = "https://github.com/tanbro/jinjyaml/blob/master/CHANGELOG.md"
 where = ["src"] # list of folders that contain the packages (["."] by default)
 
 [tool.setuptools_scm]
-version_scheme = "guess-next-dev"    # guess-next-dev or post-release
-write_to = "src/jinjyaml/version.py"
+# version_scheme = "guess-next-dev"    # guess-next-dev or post-release
+write_to = "src/jinjyaml/_version.py"
 
 [tool.black]
 line-length = 128
