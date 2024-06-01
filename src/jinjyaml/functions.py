@@ -1,15 +1,15 @@
-import sys
-from typing import Any, Mapping, MutableMapping, MutableSequence, Optional, Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Mapping, MutableMapping, MutableSequence, Optional, Sequence, Type, Union
 
 import jinja2
 import yaml
 
 from .data import Data
 
-if sys.version_info < (3, 12):  # pragma: no cover
-    from ._yaml_types_backward import TYamlLoaderTypes
-else:  # pragma: no cover
-    from ._yaml_types import TYamlLoaderTypes
+if TYPE_CHECKING:  # pragma: no cover
+    from yaml.cyaml import _CLoader
+    from yaml.loader import _Loader
 
 
 __all__ = ["extract"]
@@ -17,7 +17,7 @@ __all__ = ["extract"]
 
 def extract(
     obj: Any,
-    loader_type: TYamlLoaderTypes,
+    loader_type: Type[Union[_Loader, _CLoader]],
     env: Optional[jinja2.Environment] = None,
     context: Optional[Mapping[str, Any]] = None,
     inplace: bool = False,

@@ -1,6 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Union
 from yaml.nodes import ScalarNode
 
 from .data import Data
+
+if TYPE_CHECKING:  # pragma: no cover
+    from yaml import Node
+    from yaml.cyaml import _CLoader
+    from yaml.loader import _Loader
 
 __all__ = ["Constructor"]
 
@@ -35,11 +43,11 @@ class Constructor:
        - Content of the tag **MUST** be text
     """  # noqa: E501
 
-    def __call__(self, loader, node):
+    def __call__(self, loader: Union[_Loader, _CLoader], node: Node) -> Union[Data, Any]:
         if isinstance(node, ScalarNode):
             source = loader.construct_scalar(node)
             if not isinstance(source, str):  # pragma: no cover
                 raise ValueError("`{}` expects `str`, but actual `{}`".format(self.__class__, type(source)))
         else:
-            raise TypeError("`{}` does not support `{}` node".format(self.__class__, type(node)))
+            raise TypeError("`{}` expects `ScalarNode`, but actual `{}`".format(self.__class__, type(node)))
         return Data(source)
