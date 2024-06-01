@@ -17,3 +17,8 @@ indent_size = 4
 # Tab indentation (no size specified)
 [Makefile]
 indent_style = tab
+
+# Tab indentation (no size specified)
+[*.bat]
+end_of_line = crlf
+indent_style = tab

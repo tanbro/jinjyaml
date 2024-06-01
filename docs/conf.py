@@ -24,7 +24,7 @@ release = ".".join(version.split(".")[:2])
 # -- Options for autodoc ----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
 
-autodoc_mock_imports = ["typing", "jinja2", "yaml"]
+# autodoc_mock_imports = ["typing", "jinja2", "yaml"]
 # Automatically extract typehints when specified and place them in
 # descriptions of the relevant function/method.
 autodoc_typehints = "both"
@@ -38,10 +38,12 @@ autodoc_member_order = "bysource"
 
 extensions = [
     "myst_parser",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.githubpages",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
-    # "autodoc2",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.intersphinx",
     "sphinx_tippy",
     "sphinx_inline_tabs",
     "sphinx_copybutton",
