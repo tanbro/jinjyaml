@@ -58,12 +58,9 @@ changelog = "https://github.com/tanbro/jinjyaml/blob/master/CHANGELOG.md"
 [tool.setuptools.packages.find]
 where = ["src"] # list of folders that contain the packages (["."] by default)
 
+[tool.setuptools.package-data]
+pyyaml_include = ["jinjyaml/py.typed"]
+
 [tool.setuptools_scm]
 # version_scheme = "guess-next-dev"    # guess-next-dev or post-release
 write_to = "src/jinjyaml/_version.py"
-
-[tool.black]
-line-length = 128
-
-[tool.isort]
-profile = "black"

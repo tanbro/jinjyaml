@@ -1,4 +1,12 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:  # pragma: no cover
+    from yaml import Dumper, ScalarNode
+
+from .data import Data
 
 __all__ = ["Representer"]
 
@@ -26,5 +34,7 @@ class Representer:
         because :func:`yaml.add_representer` will add the symbol itself.
     """
 
-    def __call__(self, dumper, data):
+    def __call__(self, dumper: Dumper, data: Data) -> ScalarNode:
+        if not isinstance(data, Data):  # pragma: no cover
+            raise TypeError(f"{type(data)}")
         return dumper.represent_scalar(f"!{self.tag}", data.source)
