@@ -7,7 +7,7 @@ name = "jinjyaml"
 authors = [{ name = "liu xue yan", email = "liu_xue_yan@foxmail.com" }]
 description = "Application specific YAML tag of Jinja2 template"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 keywords = [
     "jinja",
     "jinja2",
