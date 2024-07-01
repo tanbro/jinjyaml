@@ -44,10 +44,9 @@ class Constructor:
     """  # noqa: E501
 
     def __call__(self, loader: Union[_Loader, _CLoader], node: Node) -> Union[Data, Any]:
-        if isinstance(node, ScalarNode):
-            source = loader.construct_scalar(node)
-            if not isinstance(source, str):  # pragma: no cover
-                raise ValueError("`{}` expects `str`, but actual `{}`".format(self.__class__, type(source)))
-        else:
-            raise TypeError("`{}` expects `ScalarNode`, but actual `{}`".format(self.__class__, type(node)))
+        if not isinstance(node, ScalarNode):
+            raise TypeError(f"`{self.__class__.__name__}` expects `{ScalarNode.__name__}`, but actual `{type(node).__name__}`")
+        source = loader.construct_scalar(node)
+        if not isinstance(source, str):  # pragma: no cover
+            raise TypeError(f"`{self.__class__.__name__}` expects `str`, but actual `{type(source).__name__}`")
         return Data(source)
