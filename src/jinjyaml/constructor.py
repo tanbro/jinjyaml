@@ -20,7 +20,6 @@ class Constructor:
 
     Add the constructor to `PyYAML Loader` as below::
 
-
         import yaml
         import jinjyaml as jy
 
