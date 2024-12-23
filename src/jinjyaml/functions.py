@@ -43,7 +43,7 @@ def extract(
 
               In this case, the function does:
 
-              #. Render it's :meth:`.Data.source` as string source of :class:`jinja2.Template`.
+              #. Render its :meth:`.Data.source` as string source of :class:`jinja2.Template`.
               #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
               #. Return the parsed `Python` object.
 
@@ -66,12 +66,13 @@ def extract(
                 The ``obj`` must be a mutable :class:`dict` or :class:`list` like object if ``inplace`` is :data:`True`.
 
             Note:
-                When the passed-in ``obj`` argument is an instance of :class:`.Data`, it **won't** be changed, even ``inplace`` was set to :data:`True`.
-                But if there was a mutable :class:`dict` or :class:`list` like object pared by YAML loader, which has cascade :class:`.Data` in it, the cascade part would be replaced.
-                However, return value is just the parsed result.
+                If the passed-in ``obj`` argument is an instance of :class:`.Data`, it **will not** be changed, even if ``inplace`` is set to :data:`True`.
+                However, if there is a mutable :class:`dict` or :class:`list`-like object parsed by the YAML loader that contains nested :class:`.Data` objects, those nested parts will be replaced.
+                The return value is always the parsed result.
+
 
     Returns:
-        Final extracted `Python` object
+        Final pared and extracted `Python` object
     """  # noqa: E501
     if isinstance(obj, Data):
         tpl = env.from_string(obj.source) if env else jinja2.Template(obj.source)
