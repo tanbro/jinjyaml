@@ -46,7 +46,7 @@ Contents
    :caption: API Reference
    :titlesonly:
 
-   apidocs/jinjyaml
+   apidocs/modules
 
 
 ------------------

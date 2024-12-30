@@ -22,58 +22,57 @@ def extract(
     context: Optional[Mapping[str, Any]] = None,
     inplace: bool = False,
 ) -> Any:
-    """Recursively render and parse template tag objects in a YAML doc-tree.
+    """Recursively render and parse template tag objects in a YAML document tree.
 
     Args:
+        obj: An object that may contain :class:`.Data` instances, such as a list or dictionary.
 
-        obj: Object like list or dictionary contains :class:`.Data` instances.
+            It can be one of the following:
 
-            It may be:
+            * A mapping or sequence object returned by a `PyYAML Loader`.
 
-            * A mapping or sequence object returned by `PyYAML Loader`.
+                In this case, the function performs the following steps:
 
-              In this case, the function does:
-
-              #. Recursively search inside ``obj`` for :class:`.Data` objects.
-              #. Render :attr:`.Data.source` as string source of :class:`jinja2.Template` of each found :class:`.Data` object.
-              #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
-              #. Return the whole ``obj`` with :class:`.Data` objects replaced with corresponding parsed `Python` object.
+                1. Recursively searches inside ``obj`` for :class:`.Data` objects.
+                2. Renders the :attr:`.Data.source` attribute as a string source for a :class:`jinja2.Template` for each found :class:`.Data` object.
+                3. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
+                4. Returns the entire ``obj`` with :class:`.Data` objects replaced by their corresponding parsed Python objects.
 
             * A single :class:`.Data` object.
 
-              In this case, the function does:
+                In this case, the function performs the following steps:
 
-              #. Render its :meth:`.Data.source` as string source of :class:`jinja2.Template`.
-              #. Parse the rendered string with the `PyYAML Loader` who loads ``obj``.
-              #. Return the parsed `Python` object.
+                1. Renders its :meth:`.Data.source` attribute as a string source for a :class:`jinja2.Template`.
+                2. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
+                3. Returns the parsed Python object.
 
-            * Other scalar objects returned by a `PyYAML Loader`:
+            * Other scalar objects returned by a `PyYAML Loader`.
 
-              In this case, the function directly returns ``obj`` with noting changed.
+                In this case, the function directly returns ``obj`` without any changes.
 
-        loader_type: The `PyYAML Loader` who loads ``obj``
-        env: `Jinja2` environment for template rendering.
-        context: Variables name-value pairs for `Jinja2` template rendering.
+        loader_type: The `PyYAML Loader` used to load ``obj``.
+        env: The :class:`jinja2.Environment` for template rendering.
+        context: A dictionary of variable name-value pairs for :mod:`jinja2` template rendering.
 
-        inplace: Whether to make an in-place replacement on :class:`.Data` objects inside ``obj``.
+        inplace: Whether to perform an in-place replacement of :class:`.Data` objects within ``obj``.
 
-            * When :data:`True`:
-              In-place replace every :class:`.Data` object with corresponding parsed `Python` object inside the passed-in ``obj``.
-            * When :data:`False` (default):
-              render and parse every :class:`.Data` object with corresponding parsed `Python` object, without modify the passed-in object.
+            - When :data:`True`:
+              Replaces every :class:`.Data` object with its corresponding parsed Python object within the passed-in ``obj``.
 
-            Tip:
-                The ``obj`` must be a mutable :class:`dict` or :class:`list` like object if ``inplace`` is :data:`True`.
+            - When :data:`False` (default):
+              Renders and parses every :class:`.Data` object with its corresponding parsed Python object without modifying the passed-in object.
 
             Note:
-                If the passed-in ``obj`` argument is an instance of :class:`.Data`, it **will not** be changed, even if ``inplace`` is set to :data:`True`.
+                ``obj`` must be a mutable :class:`dict` or :class:`list`-like object if ``inplace`` is :data:`True`.
+
+            Note:
+                If the passed-in ``obj`` argument is an instance of :class:`.Data`, it will **not** be changed, even if ``inplace`` is set to :data:`True`.
                 However, if there is a mutable :class:`dict` or :class:`list`-like object parsed by the YAML loader that contains nested :class:`.Data` objects, those nested parts will be replaced.
                 The return value is always the parsed result.
 
-
     Returns:
-        Final pared and extracted `Python` object
-    """  # noqa: E501
+        The final parsed and extracted Python object.
+    """
     if isinstance(obj, Data):
         tpl = env.from_string(obj.source) if env else jinja2.Template(obj.source)
         s = tpl.render(**(context or dict()))
