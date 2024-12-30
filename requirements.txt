@@ -3,6 +3,5 @@
 
 -e .
 -r docs/requirements.txt
-build
+-r tests/requirements.txt
 pre-commit
-ruff
