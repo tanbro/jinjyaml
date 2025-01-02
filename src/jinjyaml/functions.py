@@ -24,35 +24,34 @@ def extract(
 ) -> Any:
     """Recursively render and parse template tag objects in a YAML document tree.
 
+    This function processes an object that may contain :class:`.Data` instances, such as lists or dictionaries.
+    It can handle the following types of input:
+
+    - A mapping or sequence object returned by a `PyYAML Loader`:
+        1. Recursively searches for :class:`.Data` objects within ``obj``.
+        2. Renders the :attr:`.Data.source` attribute as a string source for a :class:`jinja2.Template`.
+        3. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
+        4. Returns the entire ``obj`` with :class:`.Data` objects replaced by their corresponding parsed Python objects.
+
+    - A single :class:`.Data` object:
+        1. Renders its :attr:`.Data.source` attribute as a string source for a :class:`jinja2.Template`.
+        2. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
+        3. Returns the parsed Python object.
+
+    - Other scalar objects returned by a `PyYAML Loader`:
+        Directly returns ``obj`` without any changes.
+
+    Note:
+        - ``obj`` must be a mutable :class:`dict` or :class:`list`-like object if ``inplace`` is :data:`True`.
+        - If ``obj`` is an instance of :class:`.Data`, it will **not** be changed, even if ``inplace`` is set to :data:`True`.
+            However, nested :class:`.Data` objects within mutable structures will still be replaced.
+        - The return value is always the parsed result.
+
     Args:
-        obj: An object that may contain :class:`.Data` instances, such as a list or dictionary.
-
-            It can be one of the following:
-
-            * A mapping or sequence object returned by a `PyYAML Loader`.
-
-                In this case, the function performs the following steps:
-
-                1. Recursively searches inside ``obj`` for :class:`.Data` objects.
-                2. Renders the :attr:`.Data.source` attribute as a string source for a :class:`jinja2.Template` for each found :class:`.Data` object.
-                3. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
-                4. Returns the entire ``obj`` with :class:`.Data` objects replaced by their corresponding parsed Python objects.
-
-            * A single :class:`.Data` object.
-
-                In this case, the function performs the following steps:
-
-                1. Renders its :meth:`.Data.source` attribute as a string source for a :class:`jinja2.Template`.
-                2. Parses the rendered string using the same `PyYAML Loader` that loaded ``obj``.
-                3. Returns the parsed Python object.
-
-            * Other scalar objects returned by a `PyYAML Loader`.
-
-                In this case, the function directly returns ``obj`` without any changes.
-
+        obj: An object that may contain :class:`.Data` instances.
         loader_type: The `PyYAML Loader` used to load ``obj``.
-        env: The :class:`jinja2.Environment` for template rendering.
-        context: A dictionary of variable name-value pairs for :mod:`jinja2` template rendering.
+        env: The :class:`jinja2.Environment` for template rendering (optional).
+        context: A dictionary of variable name-value pairs for :mod:`jinja2` template rendering (optional).
 
         inplace: Whether to perform an in-place replacement of :class:`.Data` objects within ``obj``.
 
@@ -61,14 +60,6 @@ def extract(
 
             - When :data:`False` (default):
               Renders and parses every :class:`.Data` object with its corresponding parsed Python object without modifying the passed-in object.
-
-            Note:
-                ``obj`` must be a mutable :class:`dict` or :class:`list`-like object if ``inplace`` is :data:`True`.
-
-            Note:
-                If the passed-in ``obj`` argument is an instance of :class:`.Data`, it will **not** be changed, even if ``inplace`` is set to :data:`True`.
-                However, if there is a mutable :class:`dict` or :class:`list`-like object parsed by the YAML loader that contains nested :class:`.Data` objects, those nested parts will be replaced.
-                The return value is always the parsed result.
 
     Returns:
         The final parsed and extracted Python object.

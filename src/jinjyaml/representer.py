@@ -15,15 +15,18 @@ __all__ = ["Representer"]
 class Representer:
     """Representer for :class:`jinja2.Template` tags.
 
-    When dumping an object into YAML string,
-    convert :class:`.Data` to string.
+    When dumping an object into a YAML string, this class converts :class:`.Data` objects to their string representation.
 
-    Add the representer to `PyYAML Dumper` as below::
+    To add the representer to a PyYAML dumper, use the following code::
 
-        representer = jinjyaml.Representer("j2")  # No "!" here !!!
+        representer = jinjyaml.Representer("j2")  # Note: No "!" here!
         yaml.add_representer(Node, representer)
 
-    """  # noqa: E501
+    Attention:
+        - The tag name passed to the `Representer` constructor **MUST NOT** include the leading "!".
+          This is because PyYAML automatically adds the "!" when registering the representer.
+        - Ensure that `Node` is the correct type for the objects you want to represent.
+    """
 
     tag: str
     """YAML tag name for include statement
@@ -35,6 +38,6 @@ class Representer:
     """
 
     def __call__(self, dumper: Dumper, data: Data) -> ScalarNode:
-        if not isinstance(data, Data):  # pragma: no cover
+        if not isinstance(data, Data):
             raise TypeError(f"{type(data)}")
         return dumper.represent_scalar(f"!{self.tag}", data.source)
