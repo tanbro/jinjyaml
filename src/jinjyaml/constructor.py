@@ -1,14 +1,15 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Union
-from yaml.nodes import ScalarNode
+
+from yaml.nodes import Node, ScalarNode
 
 from .data import Data
 
 if TYPE_CHECKING:  # pragma: no cover
-    from yaml import Node
     from yaml.cyaml import _CLoader
     from yaml.loader import _Loader
+
 
 __all__ = ["Constructor"]
 
