@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
@@ -46,11 +46,11 @@ jobs:
           cache: "pip"
 
       - name: Install project and dependent tools
-        run: |
-          pip install -e . coverage ruff
-      - name: Check with ruff
-        run: |
-          ruff check .
+        run: pip install -e . coverage ruff mypy types-PyYAML
+      - name: Lint with ruff
+        run: ruff check
+      - name: Static type check with mypy
+        run: mypy
       - name: Test with coverage
         run: |
           coverage run -m unittest -fcv
