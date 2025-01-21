@@ -124,11 +124,9 @@ We'll get:
 #### pyyaml-include
 
 > ℹ️ **Note:** \
-> Since [jinja2][]'s [`include`](https://jinja.palletsprojects.com/en/3.0.x/templates/#include) and [`indent`](https://jinja.palletsprojects.com/en/3.0.x/templates/#jinja-filters.indent) do not work well with indentation-sensitive languages like Python or YAML, it is not recommended to use these features in complex cases.
+> Jinja2's [`include`](https://jinja.palletsprojects.com/en/3.0.x/templates/#include) and [`indent`](https://jinja.palletsprojects.com/en/3.0.x/templates/#jinja-filters.indent) features do not handle indentation well in languages sensitive to it, such as Python or YAML. Therefore, using these features in complex cases is not recommended.
 >
-> For such scenarios, consider using [pyyaml-include][pyyaml-include][].
-> It provides a [PyYAML][] extension for including other YAML files.
-> We can use this extension instead of Jinja2's `include` and `indent` to better maintain the indentation of YAML files.
+> For such scenarios, consider using [pyyaml-include][]. This package provides a [PyYAML][] extension that allows you to include other YAML files while preserving proper indentation. Using this extension can help maintain the integrity of your YAML files more effectively.
 
 1. install [pyyaml-include][]:
 
@@ -179,11 +177,11 @@ Then we'll get:
 }
 ```
 
-In this situation, it is not necessary to use `jinja2.Environment` and `jinja2.FileSystemLoader` to render the template, nor is it necessary to use the `indent` filter in the template. This is because [pyyaml-include][] has already parsed the file into an object.
+In this situation, there is no need to use `jinja2.Environment` and `jinja2.FileSystemLoader` to render the template, nor is it necessary to apply the `indent` filter within the template. This is because [pyyaml-include][] has already parsed the included files into objects.
 
 > ❇️ **Conclusions:** \
-> We can use [jinja2][]'s `include` and `indent` to include other YAML files **literally**, or to use [pyyaml-include][] to include other YAML files **as already-parsed objects**.
+> You can use [jinja2][]'s `include` and `indent` to literally include other YAML files as raw text, or use [pyyaml-include][] to include other YAML files as already-parsed objects.
 
 [jinja2]: https://jinja.palletsprojects.com/ "Jinja is a fast, expressive, extensible templating engine."
 [pyyaml]: https://pyyaml.org/ "PyYAML is a full-featured YAML framework for the Python programming language."
-[pyyaml-include]: https://github.com/tanbro/jinjyaml "An extending constructor of PyYAML: include other YAML files into current YAML document."
+[pyyaml-include]: https://github.com/tanbro/pyyaml-include "An extending constructor of PyYAML: include other YAML files into current YAML document."
