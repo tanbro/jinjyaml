@@ -41,13 +41,13 @@ class BasicTestCase(unittest.TestCase):
     def test_construct(self):
         for Loader in LOADERS:
             obj = yaml.load(YAML, Loader)
-            result = jy.extract(obj)
+            result = jy.extract(obj, Loader)
             self.assertListEqual(result["data"], DATA["data"], f"{Loader}")
 
     def test_inplace_extract(self):
         for Loader in LOADERS:
             obj = yaml.load(YAML, Loader)
-            jy.extract(obj, inplace=True)
+            jy.extract(obj, Loader, inplace=True)
             self.assertListEqual(obj["data"], DATA["data"])
 
     def test_inplace_extract_list(self):
@@ -62,7 +62,7 @@ class BasicTestCase(unittest.TestCase):
         for Loader in LOADERS:
             n = randint(1, 100)
             obj = yaml.load(s, Loader)
-            jy.extract(obj, inplace=True, context={"n": n})
+            jy.extract(obj, Loader, inplace=True, context={"n": n})
             self.assertListEqual(obj[0], [x + 1 for x in range(n)])
 
     def test_load_from_represent(self):
@@ -70,16 +70,16 @@ class BasicTestCase(unittest.TestCase):
             obj1 = yaml.load(YAML, Loader)
             txt = yaml.dump(obj1)
             obj2 = yaml.load(txt, Loader)
-            data2 = jy.extract(obj2)
+            data2 = jy.extract(obj2, Loader)
             self.assertListEqual(DATA["data"], data2["data"])
 
     def test_reload_extracted(self):
         for Loader in LOADERS:
             obj1 = yaml.load(YAML, Loader)
-            data1 = jy.extract(obj1)
+            data1 = jy.extract(obj1, Loader)
             txt = yaml.dump(data1)
             obj2 = yaml.load(txt, Loader)
-            data2 = jy.extract(obj2)
+            data2 = jy.extract(obj2, Loader)
             self.assertListEqual(data1["data"], data2["data"])
 
     def test_tag_type_complex(self):
@@ -103,7 +103,7 @@ class SerializationTestCase(unittest.TestCase):
             obj1 = yaml.load(YAML, Loader)
             data = pickle.dumps(obj1)
             obj2 = pickle.loads(data)
-            obj2 = jy.extract(obj2)
+            obj2 = jy.extract(obj2, Loader)
             self.assertListEqual(obj2["data"], DATA["data"])
 
 

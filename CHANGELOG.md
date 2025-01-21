@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 0.4
+
+> 📅 **Date** 2024-6-1
+
+- 🆕 New Features:
+  - Add `py.typed` file, make the package PEP-561 friendly
+
+- Better type hints
+- Some optimizations and bugfix
+
+## 0.4rc1
+
+> 📅 **Date** 2024-3-15
+
 ## 0.3
 
 | Version | 0.3       |

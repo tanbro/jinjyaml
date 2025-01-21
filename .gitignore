@@ -1,9 +1,3 @@
-# setuptools_scm version file
-src/**/version.py
-
-# test-results aircraft
-test-results
-
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -927,3 +921,12 @@ Backup of *.doc*
 
 # LibreOffice locks
 .~lock.*#
+
+
+
+# setuptools_scm version file
+src/**/_version.py
+*.lock
+
+# test-results aircraft
+test-results

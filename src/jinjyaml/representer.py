@@ -1,29 +1,40 @@
+from dataclasses import dataclass
+
+from yaml import ScalarNode
+from yaml.representer import BaseRepresenter
+
+from .data import Data
+
 __all__ = ["Representer"]
 
 
+@dataclass
 class Representer:
     """Representer for :class:`jinja2.Template` tags.
 
-    When dumping an object into YAML string,
-    convert :class:`.Data` to string.
+    When dumping an object into a YAML string, this class converts :class:`.Data` objects to their string representation.
 
-    Add the representer to `PyYAML Dumper` as below::
+    To add the representer to a PyYAML dumper, use the following code::
 
-        representer = jinjyaml.Representer('j2')  # No "!" here !!!
+        representer = jinjyaml.Representer("j2")  # Note: No "!" here!
         yaml.add_representer(Node, representer)
 
-    .. attention::
+    Attention:
+        - The tag name passed to the `Representer` constructor **MUST NOT** include the leading "!".
+          This is because PyYAML automatically adds the "!" when registering the representer.
+        - Ensure that `Node` is the correct type for the objects you want to represent.
+    """
 
-        Custom YAML tags start with ``"!"``.
+    tag: str
+    """YAML tag name for include statement
 
-        But, here we **SHOULD NOT** put a ``"!"`` at the beginning of ``tag`` -- ``yaml.add_representer`` will add the symbol itself.
-    """  # noqa: E501
+    Attention:
+        Custom YAML tag's name starts with ``"!"``.
+        But we **MUST NOT** put a ``"!"`` at the beginning here,
+        because :func:`yaml.add_representer` will add the symbol itself.
+    """
 
-    def __init__(self, tag: str):
-        """
-        :param str tag: YAML tag
-        """
-        self._tag = tag
-
-    def __call__(self, dumper, data):
-        return dumper.represent_scalar(f"!{self._tag}", data.source)
+    def __call__(self, dumper: BaseRepresenter, data: Data) -> ScalarNode:
+        if not isinstance(data, Data):
+            raise TypeError(f"{type(data)}")
+        return dumper.represent_scalar(f"!{self.tag}", data.source)

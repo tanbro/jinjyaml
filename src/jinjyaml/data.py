@@ -1,25 +1,11 @@
-from typing import Type
+from dataclasses import dataclass
 
 __all__ = ["Data"]
 
 
+@dataclass(frozen=True)
 class Data:
-    """A `PyYAML` Custom tag represents a `Jinja2` template object."""
+    """A custom PyYAML tag that stores the string source of a :class:`jinja2.Template` object."""
 
-    def __init__(
-        self,
-        source: str,
-        loader_type: Type,
-    ):
-        self._source = source
-        self._loader_type = loader_type
-
-    @property
-    def source(self) -> str:
-        """Source code to make `Jinja2` template."""
-        return self._source
-
-    @property
-    def loader_type(self) -> Type:
-        """`PyYAML Loader` class parsing the tag object."""
-        return self._loader_type
+    source: str
+    """The source code of the `jinja2.Template` object."""

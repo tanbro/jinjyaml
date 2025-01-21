@@ -1,3 +1,4 @@
+========
 jinjyaml
 ========
 
@@ -25,9 +26,11 @@ Release    Version   Built at
 ========== ========= =========
 
 
-Application specific YAML tag of Jinja2 template.
+.. rubric::
+   Application specific YAML_ (PyYAML_) tag of Jinja2_ template.
 
 
+--------
 Contents
 --------
 
@@ -43,12 +46,19 @@ Contents
    :caption: API Reference
    :titlesonly:
 
-   apidocs/index
+   apidocs/modules
 
 
+------------------
 Indices and tables
 ------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+
+.. furo has no search page
+.. * :ref:`search`
+
+.. _YAML: http://yaml.org/
+.. _PyYaml: https://pyyaml.org/
+.. _Jinja2: https://palletsprojects.com/p/jinja/
