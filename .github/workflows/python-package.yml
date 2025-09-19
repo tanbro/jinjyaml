@@ -7,6 +7,11 @@ on:
   push:
     branches: [master]
     tags: ["*"]
+    paths:
+      - ".github/**"
+      - "pyproject.toml"
+      - "src/**"
+      - "tests/**"
   pull_request:
     branches: [master]
 
