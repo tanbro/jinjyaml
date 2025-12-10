@@ -7,7 +7,7 @@ name = "jinjyaml"
 authors = [{ name = "liu xue yan", email = "liu_xue_yan@foxmail.com" }]
 description = "Application specific YAML tag of Jinja2 template"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 keywords = [
     "jinja",
     "jinja2",
@@ -48,7 +48,11 @@ repository = "https://github.com/tanbro/jinjyaml"
 changelog = "https://github.com/tanbro/jinjyaml/blob/master/CHANGELOG.md"
 
 [dependency-groups]
-dev = ["pre-commit", { include-group = "typing" }]
+dev = [
+    { include-group = "docs" },
+    { include-group = "test" },
+    { include-group = "typing" },
+]
 test = ["coverage"]
 docs = [
     'Sphinx>=7.0.1',
@@ -60,7 +64,7 @@ docs = [
     'sphinx-inline-tabs',
     'sphinx_tippy',
 ]
-typing = ["types-PyYAML"]
+typing = ["mypy", "types-PyYAML"]
 
 [tool.setuptools.packages.find]
 where = ["src"] # list of folders that contain the packages (["."] by default)

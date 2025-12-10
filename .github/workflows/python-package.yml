@@ -5,23 +5,23 @@ name: Python package
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     tags: ["*"]
     paths:
       - ".github/**"
-      - "pyproject.toml"
       - "src/**"
       - "tests/**"
+      - "pyproject.toml"
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
-  check-pep440:
+  get-version-pep440:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
-      - name: Check PEP-440 style version
+      - name: Get PEP-440 style version
         id: get-version
         run: |
           PEP440_VERSION=""
@@ -31,80 +31,56 @@ jobs:
           then
             PEP440_VERSION="${BRANCH_OR_TAG#$VERSION_PREFIX}"
           fi
-          echo "version=${PEP440_VERSION}" >> $GITHUB_OUTPUT
+          echo "version=${PEP440_VERSION}" | tee -a $GITHUB_OUTPUT
 
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
-
-      - name: Install project and dependent tools
-        run: pip install -e . coverage ruff mypy types-PyYAML
-      - name: Lint with ruff
-        run: ruff check
-      - name: Static type check with mypy
-        run: mypy
-      - name: Test with coverage
-        run: |
-          coverage run -m unittest -fcv
-          coverage report -m
-          coverage xml
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  build:
-    runs-on: ubuntu-latest
-    needs: [test, check-pep440]
-    if: needs.check-pep440.outputs.version != ''
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
         with:
-          fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v5
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+      - name: Install project
+        run: uv sync --no-dev --group test --group typing
+      - name: Cache of Ruff and MyPY
+        uses: actions/cache@v4
         with:
-          cache: "pip"
-      - name: Install builder
-        run: pip install build
-      - name: Build Python distribution
-        run: pyproject-build
-      - name: Upload dist to artifact
-        uses: actions/upload-artifact@v4
+          path: |
+            .ruff_cache
+            .mypy_cache
+          key: cache-mypy-ruff
+      - name: Lint check with ruff
+        uses: astral-sh/ruff-action@v3
+      - name: Static type check with mypy
+        run: uv run mypy
+      - name: Unit test
+        run: |
+          uv run coverage run -m unittest -fcv
+          uv run coverage report -m
+          uv run coverage xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          name: jinjyaml-dist-${{ needs.check-pep440.outputs.version }}
-          path: dist
-          if-no-files-found: error
-          retention-days: 1
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   publish:
     runs-on: ubuntu-latest
-    needs: [check-pep440, build]
-    if: needs.check-pep440.outputs.version != ''
-    permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    needs: [get-version-pep440, test]
+    if: needs.get-version-pep440.outputs.version != ''
     steps:
-      - name: Download dist from artifact
-        uses: actions/download-artifact@v4
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
         with:
-          name: jinjyaml-dist-${{needs.check-pep440.outputs.version}}
-          path: dist
-      - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          enable-cache: true
+      - name: Build
+        run: uv build
+      - name: Publish
+        run: uv publish --token ${{ secrets.PYPI_API_TOKEN }}
